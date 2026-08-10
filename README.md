@@ -150,9 +150,13 @@ Route protection is handled in `src/middleware.ts`. Add paths to the `PROTECTED_
 
 ## Deployment
 
-This project deploys to [Cloudflare Workers](https://workers.cloudflare.com/).
+This project deploys to [Cloudflare Workers](https://workers.cloudflare.com/) (Workers + Static Assets via `wrangler.jsonc`), **not** Cloudflare Pages.
 
-1. Build the project:
+**Live Worker:** https://progressapp.julpawcio.workers.dev/
+
+### Manual deploy
+
+1. Build:
 
 ```bash
 npm run build
@@ -164,11 +168,35 @@ npm run build
 npx wrangler deploy
 ```
 
-Set `SUPABASE_URL` and `SUPABASE_KEY` as secrets in your Cloudflare dashboard or via `npx wrangler secret put`.
+Set runtime secrets:
+
+```bash
+npx wrangler secret put SUPABASE_URL
+npx wrangler secret put SUPABASE_KEY
+```
+
+### Auto-deploy (Workers Builds)
+
+Production auto-deploy is owned by **Cloudflare Workers Builds** (GitHub app), not a GitHub Actions deploy job.
+
+1. Cloudflare Dashboard → Workers & Pages → `progressapp` → **Settings** → **Builds** → **Connect**
+2. Authorize the Cloudflare Workers & Pages GitHub app on `JPawelka/ProgressApp`
+3. Recommended settings:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Root directory | `/` |
+| Build command | `npm ci && npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Non-production deploy | `npx wrangler versions upload` |
+| Build variables & secrets | `SUPABASE_URL`, `SUPABASE_KEY` |
+
+Worker dashboard name must stay `progressapp` (matches `wrangler.jsonc`).
 
 ## CI
 
-GitHub Actions runs lint + build on every push and PR to `master`. Configure `SUPABASE_URL` and `SUPABASE_KEY` as repository secrets in GitHub for the build step.
+GitHub Actions runs **lint + build only** on every push and PR to `main` (no deploy step). Configure repository secrets `SUPABASE_URL` and `SUPABASE_KEY` for the build.
 
 ## License
 
