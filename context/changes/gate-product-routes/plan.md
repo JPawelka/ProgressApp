@@ -272,7 +272,7 @@ MVP scale is small; owner-scoped indexes on `(user_id, …)` and exercise-histor
 
 #### Manual
 
-- [ ] 3.2 Cross-user SELECT denied / empty
-- [ ] 3.3 Cross-user INSERT denied
-- [ ] 3.4 Anonymous product routes redirect to sign-in
-- [ ] 3.5 Signed-in placeholders accessible
+- [x] 3.2 Cross-user SELECT denied / empty
+- [x] 3.3 Cross-user INSERT denied
+- [x] 3.4 Anonymous product routes redirect to sign-in
+- [x] 3.5 Signed-in placeholders accessible

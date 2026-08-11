@@ -129,9 +129,9 @@ With `npm run dev`:
 
 | # | Check | Pass? (Y/N) | Notes |
 |---|--------|-------------|-------|
-| 3.2 | Cross-user SELECT of another user’s plan returns no rows | | |
-| 3.3 | Cross-user INSERT into another user’s plan lineage fails (policy and/or trigger) | | |
-| 3.4 | Anonymous `/plans` and `/sessions` redirect to sign-in | | |
-| 3.5 | Signed-in access to both placeholders succeeds | | |
+| 3.2 | Cross-user SELECT of another user’s plan returns no rows | Y | Empty under User B JWT |
+| 3.3 | Cross-user INSERT into another user’s plan lineage fails (policy and/or trigger) | Y | Trigger: user_id must match parent plan owner |
+| 3.4 | Anonymous `/plans` and `/sessions` redirect to sign-in | Y | Confirmed (also Phase 2) |
+| 3.5 | Signed-in access to both placeholders succeeds | Y | Confirmed (also Phase 2) |
 
 **Phase 3 complete only when all rows are Y.**
