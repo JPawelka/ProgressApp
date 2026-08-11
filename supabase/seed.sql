@@ -1,0 +1,3 @@
+-- Intentionally empty for F-01 / gate-product-routes.
+-- Satisfies config.toml [db.seed] sql_paths so `supabase db reset` succeeds.
+-- Domain fixtures belong in a later slice.
