@@ -16,7 +16,7 @@ export interface PlanExercise {
   name: string;
   sort_order: number;
   default_reps: number | null;
-  default_load_kg: number | null;
+  default_load_kg: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -37,7 +37,7 @@ export interface SessionSet {
   plan_exercise_id: string;
   set_number: number;
   reps: number | null;
-  load_kg: number | null;
+  load_kg: string | null;
   created_at: string;
   updated_at: string;
 }

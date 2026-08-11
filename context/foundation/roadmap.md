@@ -3,7 +3,7 @@ project: ProgressApp
 version: 1
 status: draft
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-08-11
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -29,7 +29,7 @@ Self-directed lifters get stuck deciding whether to increase, hold, or deload �
 
 | ID | Change ID | Outcome (user can …) | Prerequisites | PRD refs | Status |
 |---|---|---|---|---|---|
-| F-01 | owner-scoped-persistence | (foundation) owner-scoped persistence contract for plans and session history | — | Access Control, Guardrails privacy | ready |
+| F-01 | owner-scoped-persistence | (foundation) owner-scoped persistence contract for plans and session history | — | Access Control, Guardrails privacy | done |
 | S-01 | account-signin | create an account and sign in | — | FR-001 | ready |
 | S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | proposed |
 | S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | proposed |
@@ -62,7 +62,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ### F-01: Owner-scoped persistence
 
 - **Outcome:** (foundation) owner-scoped persistence contract for plans and session history lands with per-owner access rules.
-- **Change ID:** owner-scoped-persistence
+- **Change ID:** owner-scoped-persistence (delivered as `gate-product-routes`)
 - **PRD refs:** Access Control, Success Criteria Guardrails (privacy)
 - **Unlocks:** S-02, S-03, S-04, S-05
 - **Prerequisites:** —
@@ -70,7 +70,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Without a minimal persistence contract, every domain slice invents storage ad hoc and privacy guardrails cannot be verified; scoped narrowly so plan/session/progression behavior still lands in the vertical slices.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -161,4 +161,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends an entry here — and flips that item's `Status` to `done` — when a change whose `Change ID` matches the item is archived.)
+- **F-01: (foundation) owner-scoped persistence contract for plans and session history** — Completed 2026-08-11 via `context/changes/gate-product-routes/` (roadmap Change ID was `owner-scoped-persistence`). Lesson: —.
