@@ -268,11 +268,11 @@ MVP scale is small; owner-scoped indexes on `(user_id, …)` and exercise-histor
 
 #### Automated
 
-- [x] 3.1 `verification.md` exists with two-user RLS and route-gate steps
+- [x] 3.1 `verification.md` exists with two-user RLS and route-gate steps — c7e424f
 
 #### Manual
 
-- [x] 3.2 Cross-user SELECT denied / empty
-- [x] 3.3 Cross-user INSERT denied
-- [x] 3.4 Anonymous product routes redirect to sign-in
-- [x] 3.5 Signed-in placeholders accessible
+- [x] 3.2 Cross-user SELECT denied / empty — c7e424f
+- [x] 3.3 Cross-user INSERT denied — c7e424f
+- [x] 3.4 Anonymous product routes redirect to sign-in — c7e424f
+- [x] 3.5 Signed-in placeholders accessible — c7e424f
