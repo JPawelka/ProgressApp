@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# supabase local runtime (also in supabase/.gitignore; root entry for ESLint)
+supabase/.temp/

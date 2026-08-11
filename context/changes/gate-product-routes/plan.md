@@ -240,29 +240,29 @@ MVP scale is small; owner-scoped indexes on `(user_id, …)` and exercise-histor
 
 #### Automated
 
-- [x] 1.1 Migration file exists with four tables and RLS enabled
-- [x] 1.2 `supabase/seed.sql` exists
-- [x] 1.3 Local `npx supabase db reset` (or migrate) exits 0
-- [x] 1.4 `npm run lint` passes
+- [x] 1.1 Migration file exists with four tables and RLS enabled — 6fe4a59
+- [x] 1.2 `supabase/seed.sql` exists — 6fe4a59
+- [x] 1.3 Local `npx supabase db reset` (or migrate) exits 0 — 6fe4a59
+- [x] 1.4 `npm run lint` passes — 6fe4a59
 
 #### Manual
 
-- [x] 1.5 Studio shows RLS + four policies per table
+- [x] 1.5 Studio shows RLS + four policies per table — 6fe4a59
 
 ### Phase 2: Types & gated product stubs
 
 #### Automated
 
-- [ ] 2.1 `src/types.ts` exports TrainingGoal, Plan, PlanExercise, Session, SessionSet
-- [ ] 2.2 `PROTECTED_ROUTES` includes `/dashboard`, `/plans`, `/sessions`
-- [ ] 2.3 Placeholder pages exist for `/plans` and `/sessions`
-- [ ] 2.4 `npm run lint` passes
-- [ ] 2.5 `npm run build` passes
+- [x] 2.1 `src/types.ts` exports TrainingGoal, Plan, PlanExercise, Session, SessionSet
+- [x] 2.2 `PROTECTED_ROUTES` includes `/dashboard`, `/plans`, `/sessions`
+- [x] 2.3 Placeholder pages exist for `/plans` and `/sessions`
+- [x] 2.4 `npm run lint` passes
+- [x] 2.5 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.6 Signed-out `/plans` and `/sessions` redirect to sign-in
-- [ ] 2.7 Signed-in placeholders render
+- [x] 2.6 Signed-out `/plans` and `/sessions` redirect to sign-in
+- [x] 2.7 Signed-in placeholders render
 
 ### Phase 3: Ownership verification
 

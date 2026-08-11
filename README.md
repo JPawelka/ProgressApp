@@ -111,7 +111,7 @@ npx supabase stop
 
 The local Studio UI is available at `http://localhost:54323`.
 
-No database tables or migrations are required — this project uses Supabase Auth's built-in `auth.users` table only.
+App migrations under `supabase/migrations/` define the owner-scoped plans/sessions schema. Apply them locally with `npx supabase db reset` (or migrate).
 
 ### Using a cloud Supabase project instead
 
@@ -145,6 +145,8 @@ Users can then sign in immediately after sign-up without clicking a confirmation
 | `/auth/signup`        | Email/password sign-up form                                             |
 | `/auth/confirm-email` | Post-signup "check your inbox" page                                     |
 | `/dashboard`          | Example protected page (redirects to `/auth/signin` if unauthenticated) |
+| `/plans`              | Protected plans placeholder (redirects to `/auth/signin` if unsigned-in) |
+| `/sessions`           | Protected sessions placeholder (redirects to `/auth/signin` if unsigned-in) |
 
 Route protection is handled in `src/middleware.ts`. Add paths to the `PROTECTED_ROUTES` array there to require authentication.
 
