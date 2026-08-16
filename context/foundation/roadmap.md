@@ -3,7 +3,7 @@ project: ProgressApp
 version: 1
 status: draft
 created: 2026-08-10
-updated: 2026-08-11
+updated: 2026-08-16
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -30,7 +30,7 @@ Self-directed lifters get stuck deciding whether to increase, hold, or deload �
 | ID | Change ID | Outcome (user can …) | Prerequisites | PRD refs | Status |
 |---|---|---|---|---|---|
 | F-01 | owner-scoped-persistence | (foundation) owner-scoped persistence contract for plans and session history | — | Access Control, Guardrails privacy | done |
-| S-01 | account-signin | create an account and sign in | — | FR-001 | ready |
+| S-01 | account-signin | create an account and sign in | — | FR-001 | in-progress |
 | S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | proposed |
 | S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | proposed |
 | S-04 | log-training-session | log a training session (sets / reps / loads) | S-03 | FR-004 | proposed |
@@ -84,7 +84,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Auth is already present in baseline — this slice is a confirm-and-close gate so FR-001 stays covered without re-scaffolding; do not expand into profile or roles work.
-- **Status:** ready
+- **Status:** in-progress
 
 ### S-02: AI plan from goal
 
