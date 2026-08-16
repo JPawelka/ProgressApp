@@ -156,22 +156,22 @@ No database migrations. Auth uses existing `auth.users`. Hosted email-confirm an
 
 #### Automated
 
-- [x] 1.1 `verification.md` exists with prerequisites, steps, and FR-001 pass/fail checklist
+- [x] 1.1 `verification.md` exists with prerequisites, steps, and FR-001 pass/fail checklist — dd961ec
 
 #### Manual
 
-- [x] 1.2 Checklist steps are clear enough to execute without guessing
+- [x] 1.2 Checklist steps are clear enough to execute without guessing — dd961ec
 
 ### Phase 2: Local smoke & close
 
 #### Automated
 
-- [ ] 2.1 If code was touched, `npm run lint` passes (skip if verification-only)
+- [x] 2.1 If code was touched, `npm run lint` passes (skip if verification-only)
 
 #### Manual
 
-- [ ] 2.2 Sign-up completes under local confirmations-off
-- [ ] 2.3 Sign-in succeeds for that user
-- [ ] 2.4 Signed-in access to `/dashboard` or `/plans` works
-- [ ] 2.5 Anonymous `/dashboard` redirects to `/auth/signin`
-- [ ] 2.6 All checklist rows marked Y in `verification.md`
+- [x] 2.2 Sign-up completes under local confirmations-off
+- [x] 2.3 Sign-in succeeds for that user
+- [x] 2.4 Signed-in access to `/dashboard` or `/plans` works
+- [x] 2.5 Anonymous `/dashboard` redirects to `/auth/signin`
+- [x] 2.6 All checklist rows marked Y in `verification.md`

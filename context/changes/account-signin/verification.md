@@ -30,13 +30,14 @@ API: http://127.0.0.1:54321
 
 | # | Check | Pass? (Y/N) | Notes |
 |---|--------|-------------|-------|
-| 2.2 | Sign-up completes under local confirmations-off (confirm-email page or immediate session) | | |
-| 2.3 | Sign-in succeeds for that user | | |
-| 2.4 | Signed-in access to `/dashboard` or `/plans` works | | |
-| 2.5 | Anonymous `/dashboard` redirects to `/auth/signin` | | |
+| 2.2 | Sign-up completes under local confirmations-off (confirm-email page or immediate session) | Y | |
+| 2.3 | Sign-in succeeds for that user | Y | |
+| 2.4 | Signed-in access to `/dashboard` or `/plans` works | Y | |
+| 2.5 | Anonymous `/dashboard` redirects to `/auth/signin` | Y | Also curl 302 on :4322 |
 
 **Phase 2 complete only when all rows are Y.**
 
 ### Notes (environment quirks)
 
+- App on `http://localhost:4322`; `.env` / `.dev.vars` pointed at hosted Supabase with confirmations off (local Supabase also running).
 -
