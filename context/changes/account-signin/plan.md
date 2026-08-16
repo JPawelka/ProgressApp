@@ -166,12 +166,12 @@ No database migrations. Auth uses existing `auth.users`. Hosted email-confirm an
 
 #### Automated
 
-- [x] 2.1 If code was touched, `npm run lint` passes (skip if verification-only)
+- [x] 2.1 If code was touched, `npm run lint` passes (skip if verification-only) — 9e287e5
 
 #### Manual
 
-- [x] 2.2 Sign-up completes under local confirmations-off
-- [x] 2.3 Sign-in succeeds for that user
-- [x] 2.4 Signed-in access to `/dashboard` or `/plans` works
-- [x] 2.5 Anonymous `/dashboard` redirects to `/auth/signin`
-- [x] 2.6 All checklist rows marked Y in `verification.md`
+- [x] 2.2 Sign-up completes under local confirmations-off — 9e287e5
+- [x] 2.3 Sign-in succeeds for that user — 9e287e5
+- [x] 2.4 Signed-in access to `/dashboard` or `/plans` works — 9e287e5
+- [x] 2.5 Anonymous `/dashboard` redirects to `/auth/signin` — 9e287e5
+- [x] 2.6 All checklist rows marked Y in `verification.md` — 9e287e5
