@@ -31,7 +31,7 @@ Self-directed lifters get stuck deciding whether to increase, hold, or deload �
 |---|---|---|---|---|---|
 | F-01 | owner-scoped-persistence | (foundation) owner-scoped persistence contract for plans and session history | — | Access Control, Guardrails privacy | done |
 | S-01 | account-signin | create an account and sign in | — | FR-001 | done |
-| S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | proposed |
+| S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | in-progress |
 | S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | proposed |
 | S-04 | log-training-session | log a training session (sets / reps / loads) | S-03 | FR-004 | proposed |
 | S-05 | progression-suggest-override | receive a progression suggestion and accept or override it | S-04 | US-01, FR-005, FR-006 | proposed |
@@ -95,9 +95,9 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Parallel with:** —
 - **Blockers:** —
 - **Unknowns:**
-  - Which LLM provider/API keys are used for plan generation in this MVP? — Owner: user. Block: no.
+  - Which LLM provider/API keys are used for plan generation in this MVP? — Owner: user. Block: no. → Resolved in plan: OpenRouter (`OPENROUTER_API_KEY`).
 - **Risk:** External AI dependency sits on the must-have path; under `speed`, keep generation to one goal→plan happy path and defer polish.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-03: Edit plan and exercises
 

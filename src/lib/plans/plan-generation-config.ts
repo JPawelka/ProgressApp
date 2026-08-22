@@ -2,6 +2,9 @@ import { OPENROUTER_API_KEY, PLAN_GENERATION_MOCK } from "astro:env/server";
 
 /** Local dev only — set in `.dev.vars`, never in production Worker secrets. */
 export function isPlanGenerationMockEnabled(): boolean {
+  if (import.meta.env.PROD) {
+    return false;
+  }
   if (!PLAN_GENERATION_MOCK) {
     return false;
   }

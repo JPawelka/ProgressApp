@@ -3,13 +3,13 @@ import { z } from "zod";
 export const trainingGoalSchema = z.enum(["mass", "strength", "endurance"]);
 
 export const planExerciseAiSchema = z.object({
-  name: z.string().trim().min(1),
+  name: z.string().trim().min(1).max(80),
   default_reps: z.number().int().positive().nullable(),
   default_load_kg: z.number().nonnegative().nullable(),
 });
 
 export const planAiSchema = z.object({
-  name: z.string().trim().min(1).nullable(),
+  name: z.string().trim().min(1).max(100).nullable(),
   exercises: z.array(planExerciseAiSchema).min(3).max(8),
 });
 
@@ -30,7 +30,7 @@ export function formatGeneratePlanRequestError(error: z.ZodError) {
 export const planAiJsonSchema = {
   type: "object",
   properties: {
-    name: { type: ["string", "null"] },
+    name: { type: ["string", "null"], minLength: 1, maxLength: 100 },
     exercises: {
       type: "array",
       minItems: 3,
@@ -38,7 +38,7 @@ export const planAiJsonSchema = {
       items: {
         type: "object",
         properties: {
-          name: { type: "string", minLength: 1 },
+          name: { type: "string", minLength: 1, maxLength: 80 },
           default_reps: { type: ["integer", "null"] },
           default_load_kg: { type: ["number", "null"] },
         },

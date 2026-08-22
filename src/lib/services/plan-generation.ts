@@ -92,7 +92,20 @@ async function persistGeneratedPlan(
   const { error: exercisesError } = (await supabase.from("plan_exercises").insert(exerciseRows)) as RowResult<unknown>;
 
   if (exercisesError) {
-    await supabase.from("plans").delete().eq("id", planId).eq("user_id", userId);
+    const { error: deleteError } = (await supabase
+      .from("plans")
+      .delete()
+      .eq("id", planId)
+      .eq("user_id", userId)) as RowResult<unknown>;
+
+    if (deleteError) {
+      console.error("Failed to rollback plan after exercise insert failure", {
+        planId,
+        exerciseError: exercisesError.message,
+        deleteError: deleteError.message,
+      });
+    }
+
     throw new PlanPersistError(exercisesError.message);
   }
 

@@ -43,6 +43,16 @@ export const POST: APIRoute = async (context) => {
     return json({ error: "Invalid request", details: formatGeneratePlanRequestError(parsed.error) }, 400);
   }
 
+  const oneMinuteAgo = new Date(Date.now() - 60_000).toISOString();
+  const { count: recentCount, error: rateError } = await supabase
+    .from("plans")
+    .select("id", { count: "exact", head: true })
+    .gte("created_at", oneMinuteAgo);
+
+  if (!rateError && recentCount !== null && recentCount >= 5) {
+    return json({ error: "Too many plan generations. Please wait a moment." }, 429);
+  }
+
   try {
     const planId = await generateAndPersistPlan(supabase, user.id, parsed.data.goal);
     return json({ planId }, 200);
