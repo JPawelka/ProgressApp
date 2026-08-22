@@ -19,6 +19,10 @@ export const generatePlanRequestSchema = z.object({
   goal: trainingGoalSchema,
 });
 
+export function formatGeneratePlanRequestError(error: z.ZodError) {
+  return z.treeifyError(error);
+}
+
 /**
  * JSON Schema for OpenRouter `response_format.json_schema` (strict).
  * Optional fields are represented as nullable so `required` can list every key.

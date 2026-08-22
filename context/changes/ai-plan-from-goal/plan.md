@@ -342,31 +342,31 @@ No new SQL migration expected — F-01 tables are sufficient. If hosted Supabase
 
 #### Automated
 
-- [x] 1.1 `zod` is listed in `package.json` dependencies
-- [x] 1.2 `OPENROUTER_API_KEY` appears in `astro.config.mjs` env schema and `.env.example`
-- [x] 1.3 OpenRouter helper + plan schemas + generation service modules exist under `src/lib/`
-- [x] 1.4 `npm run lint` passes
-- [x] 1.5 `npm run build` passes (with existing Supabase env; OpenRouter optional at build time)
+- [x] 1.1 `zod` is listed in `package.json` dependencies — 08dd6a7
+- [x] 1.2 `OPENROUTER_API_KEY` appears in `astro.config.mjs` env schema and `.env.example` — 08dd6a7
+- [x] 1.3 OpenRouter helper + plan schemas + generation service modules exist under `src/lib/` — 08dd6a7
+- [x] 1.4 `npm run lint` passes — 08dd6a7
+- [x] 1.5 `npm run build` passes (with existing Supabase env; OpenRouter optional at build time) — 08dd6a7
 
 #### Manual
 
-- [x] 1.6 With key missing, config banner (or equivalent) indicates plan generation is unavailable
-- [x] 1.7 With a real key in `.dev.vars`, a one-off server-side call path is ready for Phase 2 (no requirement to expose UI yet)
+- [x] 1.6 With key missing, config banner (or equivalent) indicates plan generation is unavailable — 08dd6a7
+- [x] 1.7 With a real key in `.dev.vars`, a one-off server-side call path is ready for Phase 2 (no requirement to expose UI yet) — 08dd6a7
 
 ### Phase 2: Generate API + persist
 
 #### Automated
 
-- [ ] 2.1 `src/pages/api/plans/generate.ts` exports `prerender = false` and `POST`
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npm run build` passes
+- [x] 2.1 `src/pages/api/plans/generate.ts` exports `prerender = false` and `POST`
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.4 Authenticated `POST` with valid goal and real OpenRouter key returns `{ planId }` and Studio/SQL shows plan + 3–8 exercises for that user
-- [ ] 2.5 Invalid body returns `400` with no new rows
-- [ ] 2.6 Forced provider failure (bad key) returns error JSON with no new rows
-- [ ] 2.7 Unauthenticated `POST` is rejected (401) with no new rows
+- [x] 2.4 Authenticated `POST` with valid goal and real OpenRouter key returns `{ planId }` and Studio/SQL shows plan + 3–8 exercises for that user
+- [x] 2.5 Invalid body returns `400` with no new rows
+- [x] 2.6 Forced provider failure (bad key) returns error JSON with no new rows
+- [x] 2.7 Unauthenticated `POST` is rejected (401) with no new rows
 
 ### Phase 3: Plans UI (generate + read-only detail)
 

@@ -1,4 +1,5 @@
 import { OPENROUTER_API_KEY, SUPABASE_URL, SUPABASE_KEY } from "astro:env/server";
+import { isPlanGenerationMockEnabled } from "@/lib/plans/plan-generation-config";
 
 export interface ConfigStatus {
   name: string;
@@ -7,6 +8,8 @@ export interface ConfigStatus {
   docsUrl?: string;
   docsLabel?: string;
 }
+
+const mockEnabled = isPlanGenerationMockEnabled();
 
 export const configStatuses: ConfigStatus[] = [
   {
@@ -18,8 +21,10 @@ export const configStatuses: ConfigStatus[] = [
   },
   {
     name: "OpenRouter",
-    configured: Boolean(OPENROUTER_API_KEY),
-    message: "OpenRouter nie jest skonfigurowany — generowanie planów jest wyłączone.",
+    configured: Boolean(OPENROUTER_API_KEY) || mockEnabled,
+    message: mockEnabled
+      ? "OpenRouter nie jest skonfigurowany — generowanie planów używa mock danych (tylko dev)."
+      : "OpenRouter nie jest skonfigurowany — generowanie planów jest wyłączone.",
   },
 ];
 
