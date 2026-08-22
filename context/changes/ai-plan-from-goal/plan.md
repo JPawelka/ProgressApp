@@ -357,32 +357,32 @@ No new SQL migration expected — F-01 tables are sufficient. If hosted Supabase
 
 #### Automated
 
-- [x] 2.1 `src/pages/api/plans/generate.ts` exports `prerender = false` and `POST`
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npm run build` passes
+- [x] 2.1 `src/pages/api/plans/generate.ts` exports `prerender = false` and `POST` — 4491395
+- [x] 2.2 `npm run lint` passes — 4491395
+- [x] 2.3 `npm run build` passes — 4491395
 
 #### Manual
 
-- [x] 2.4 Authenticated `POST` with valid goal and real OpenRouter key returns `{ planId }` and Studio/SQL shows plan + 3–8 exercises for that user
-- [x] 2.5 Invalid body returns `400` with no new rows
-- [x] 2.6 Forced provider failure (bad key) returns error JSON with no new rows
-- [x] 2.7 Unauthenticated `POST` is rejected (401) with no new rows
+- [x] 2.4 Authenticated `POST` with valid goal and real OpenRouter key returns `{ planId }` and Studio/SQL shows plan + 3–8 exercises for that user — 4491395
+- [x] 2.5 Invalid body returns `400` with no new rows — 4491395
+- [x] 2.6 Forced provider failure (bad key) returns error JSON with no new rows — 4491395
+- [x] 2.7 Unauthenticated `POST` is rejected (401) with no new rows — 4491395
 
 ### Phase 3: Plans UI (generate + read-only detail)
 
 #### Automated
 
-- [ ] 3.1 `src/pages/plans/[id].astro` and generate island component exist
-- [ ] 3.2 `/plans` index is no longer placeholder-only
-- [ ] 3.3 `npm run lint` passes
-- [ ] 3.4 `npm run build` passes
+- [x] 3.1 `src/pages/plans/[id].astro` and generate island component exist
+- [x] 3.2 `/plans` index is no longer placeholder-only
+- [x] 3.3 `npm run lint` passes
+- [x] 3.4 `npm run build` passes
 
 #### Manual
 
-- [ ] 3.5 Signed-in: open `/plans`, generate for a goal, land on detail with exercises visible
-- [ ] 3.6 Signed-in: return to `/plans`, see the new plan in the list, reopen detail
-- [ ] 3.7 Signed-out: `/plans` and `/plans/<id>` redirect to sign-in
-- [ ] 3.8 Generate error path shows an in-UI error and does not navigate away
+- [x] 3.5 Signed-in: open `/plans`, generate for a goal, land on detail with exercises visible
+- [x] 3.6 Signed-in: return to `/plans`, see the new plan in the list, reopen detail
+- [x] 3.7 Signed-out: `/plans` and `/plans/<id>` redirect to sign-in
+- [x] 3.8 Generate error path shows an in-UI error and does not navigate away
 
 ### Phase 4: Manual verification
 

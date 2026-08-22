@@ -1,27 +1,76 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
+import GeneratePlanForm from "@/components/plans/GeneratePlanForm";
+import { createClient } from "@/lib/supabase";
+import { GOAL_LABELS, planDisplayName } from "@/lib/plans/display";
+import type { Plan } from "@/types";
 
-const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+type PlanListItem = Pick<Plan, "id" | "goal" | "name" | "created_at">;
+
+let plans: PlanListItem[] = [];
+
+if (supabase) {
+  const { data } = await supabase
+    .from("plans")
+    .select("id, goal, name, created_at")
+    .order("created_at", { ascending: false });
+
+  plans = data ?? [];
+}
+
+function formatCreatedAt(value: string): string {
+  return new Date(value).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
 ---
 
 <Layout title="Plans">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-        Plans
-      </h1>
-      <p class="text-blue-100/80">
-        Signed in as <span class="font-semibold text-white">{user?.email}</span>
-      </p>
-      <p class="mt-2 text-sm text-blue-100/50">Placeholder for upcoming plan work. No plan CRUD here yet.</p>
-      <form method="POST" action="/api/auth/signout" class="mt-6">
-        <button
-          type="submit"
-          class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-        >
-          Sign out
-        </button>
-      </form>
+  <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+    <Topbar />
+
+    <div class="mx-auto max-w-2xl space-y-8 py-8">
+      <div class="text-center">
+        <h1 class="mb-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+          Plans
+        </h1>
+        <p class="text-sm text-blue-100/60">Generate a training plan from your goal.</p>
+      </div>
+
+      <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+        <h2 class="mb-4 text-lg font-semibold text-white">Generate a plan</h2>
+        <GeneratePlanForm client:load />
+      </section>
+
+      <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+        <h2 class="mb-4 text-lg font-semibold text-white">Your plans</h2>
+        {
+          plans.length === 0 ? (
+            <p class="text-sm text-blue-100/60">No plans yet. Generate one above to get started.</p>
+          ) : (
+            <ul class="divide-y divide-white/10">
+              {plans.map((plan) => (
+                <li>
+                  <a
+                    href={`/plans/${plan.id}`}
+                    class="flex items-center justify-between gap-4 py-3 transition-colors hover:text-purple-200"
+                  >
+                    <span class="font-medium text-white">{planDisplayName(plan.name, plan.goal)}</span>
+                    <span class="shrink-0 text-sm text-blue-100/50">
+                      {GOAL_LABELS[plan.goal]} · {formatCreatedAt(plan.created_at)}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </section>
     </div>
   </div>
 </Layout>
