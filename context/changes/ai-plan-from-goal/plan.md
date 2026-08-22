@@ -388,11 +388,11 @@ No new SQL migration expected — F-01 tables are sufficient. If hosted Supabase
 
 #### Automated
 
-- [x] 4.1 `context/changes/ai-plan-from-goal/verification.md` exists with the steps above
+- [x] 4.1 `context/changes/ai-plan-from-goal/verification.md` exists with the steps above — e8aa282
 
 #### Manual
 
-- [x] 4.2 Happy path checklist completed for all three goals
-- [x] 4.3 Failure path confirmed (error, no partial row)
-- [x] 4.4 Multi-plan list behavior confirmed
-- [x] 4.5 Anonymous gate still redirects
+- [x] 4.2 Happy path checklist completed for all three goals — e8aa282
+- [x] 4.3 Failure path confirmed (error, no partial row) — e8aa282
+- [x] 4.4 Multi-plan list behavior confirmed — e8aa282
+- [x] 4.5 Anonymous gate still redirects — e8aa282
