@@ -372,27 +372,27 @@ No new SQL migration expected — F-01 tables are sufficient. If hosted Supabase
 
 #### Automated
 
-- [x] 3.1 `src/pages/plans/[id].astro` and generate island component exist
-- [x] 3.2 `/plans` index is no longer placeholder-only
-- [x] 3.3 `npm run lint` passes
-- [x] 3.4 `npm run build` passes
+- [x] 3.1 `src/pages/plans/[id].astro` and generate island component exist — 9b93d7d
+- [x] 3.2 `/plans` index is no longer placeholder-only — 9b93d7d
+- [x] 3.3 `npm run lint` passes — 9b93d7d
+- [x] 3.4 `npm run build` passes — 9b93d7d
 
 #### Manual
 
-- [x] 3.5 Signed-in: open `/plans`, generate for a goal, land on detail with exercises visible
-- [x] 3.6 Signed-in: return to `/plans`, see the new plan in the list, reopen detail
-- [x] 3.7 Signed-out: `/plans` and `/plans/<id>` redirect to sign-in
-- [x] 3.8 Generate error path shows an in-UI error and does not navigate away
+- [x] 3.5 Signed-in: open `/plans`, generate for a goal, land on detail with exercises visible — 9b93d7d
+- [x] 3.6 Signed-in: return to `/plans`, see the new plan in the list, reopen detail — 9b93d7d
+- [x] 3.7 Signed-out: `/plans` and `/plans/<id>` redirect to sign-in — 9b93d7d
+- [x] 3.8 Generate error path shows an in-UI error and does not navigate away — 9b93d7d
 
 ### Phase 4: Manual verification
 
 #### Automated
 
-- [ ] 4.1 `context/changes/ai-plan-from-goal/verification.md` exists with the steps above
+- [x] 4.1 `context/changes/ai-plan-from-goal/verification.md` exists with the steps above
 
 #### Manual
 
-- [ ] 4.2 Happy path checklist completed for all three goals
-- [ ] 4.3 Failure path confirmed (error, no partial row)
-- [ ] 4.4 Multi-plan list behavior confirmed
-- [ ] 4.5 Anonymous gate still redirects
+- [x] 4.2 Happy path checklist completed for all three goals
+- [x] 4.3 Failure path confirmed (error, no partial row)
+- [x] 4.4 Multi-plan list behavior confirmed
+- [x] 4.5 Anonymous gate still redirects
