@@ -1,27 +1,86 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
+import { createClient } from "@/lib/supabase";
+import { GOAL_LABELS, planDisplayName } from "@/lib/plans/display";
+import type { TrainingGoal } from "@/types";
 
-const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+interface SessionListRow {
+  id: string;
+  performed_at: string;
+  plan_id: string;
+  plans: { name: string | null; goal: TrainingGoal } | null;
+}
+
+let sessions: SessionListRow[] = [];
+
+if (supabase) {
+  const { data } = await supabase
+    .from("sessions")
+    .select("id, performed_at, plan_id, plans(name, goal)")
+    .order("performed_at", { ascending: false });
+
+  sessions = (data ?? []) as SessionListRow[];
+}
+
+function formatPerformedAt(value: string): string {
+  return new Date(value).toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function sessionLabel(row: SessionListRow): string {
+  if (row.plans) {
+    return planDisplayName(row.plans.name, row.plans.goal);
+  }
+  return "Plan";
+}
 ---
 
 <Layout title="Sessions">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-        Sessions
-      </h1>
-      <p class="text-blue-100/80">
-        Signed in as <span class="font-semibold text-white">{user?.email}</span>
-      </p>
-      <p class="mt-2 text-sm text-blue-100/50">Placeholder for upcoming session logging. No session CRUD here yet.</p>
-      <form method="POST" action="/api/auth/signout" class="mt-6">
-        <button
-          type="submit"
-          class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-        >
-          Sign out
-        </button>
-      </form>
+  <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+    <Topbar />
+
+    <div class="mx-auto max-w-2xl space-y-8 py-8">
+      <div class="text-center">
+        <h1 class="mb-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+          Sessions
+        </h1>
+        <p class="text-sm text-blue-100/60">Open a plan to log a workout. Newest sessions appear first.</p>
+      </div>
+
+      <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+        <h2 class="mb-4 text-lg font-semibold text-white">Your sessions</h2>
+        {
+          sessions.length === 0 ? (
+            <p class="text-sm text-blue-100/60">
+              No sessions yet.{" "}
+              <a href="/plans" class="text-purple-300 transition-colors hover:text-purple-100 hover:underline">
+                Open a plan
+              </a>{" "}
+              to log one.
+            </p>
+          ) : (
+            <ul class="divide-y divide-white/10">
+              {sessions.map((session) => (
+                <li class="flex items-center justify-between gap-4 py-3">
+                  <span class="font-medium text-white">{sessionLabel(session)}</span>
+                  <span class="shrink-0 text-sm text-blue-100/50">
+                    {session.plans ? `${GOAL_LABELS[session.plans.goal]} · ` : ""}
+                    {formatPerformedAt(session.performed_at)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </section>
     </div>
   </div>
 </Layout>

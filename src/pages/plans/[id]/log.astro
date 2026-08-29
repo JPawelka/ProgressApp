@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Topbar from "@/components/Topbar.astro";
-import EditPlanForm from "@/components/plans/EditPlanForm";
+import LogSessionForm from "@/components/sessions/LogSessionForm";
 import { createClient } from "@/lib/supabase";
 import { planDisplayName } from "@/lib/plans/display";
 import type { Plan, PlanExercise } from "@/types";
@@ -11,6 +11,7 @@ const supabase = createClient(Astro.request.headers, Astro.cookies);
 
 let planRow: Plan | null = null;
 let exerciseRows: PlanExercise[] = [];
+let exercisesFailed = false;
 
 interface RowResult<T> {
   data: T | null;
@@ -29,13 +30,16 @@ if (supabase && id) {
       .eq("plan_id", id)
       .order("sort_order", { ascending: true })) as RowResult<PlanExercise[]>;
 
-    if (!exercisesResult.error && exercisesResult.data) {
+    if (exercisesResult.error || !exercisesResult.data || exercisesResult.data.length === 0) {
+      exercisesFailed = true;
+    } else {
       exerciseRows = exercisesResult.data;
     }
   }
 }
 
-const pageTitle = planRow ? planDisplayName(planRow.name, planRow.goal) : "Plan not found";
+const pageTitle = planRow ? `Log · ${planDisplayName(planRow.name, planRow.goal)}` : "Plan not found";
+const showLog = planRow && !exercisesFailed && exerciseRows.length > 0;
 ---
 
 <Layout title={pageTitle}>
@@ -52,21 +56,27 @@ const pageTitle = planRow ? planDisplayName(planRow.name, planRow.goal) : "Plan 
               ← Back to plans
             </a>
           </div>
-        ) : (
+        ) : showLog ? (
           <>
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <a href="/plans" class="text-sm text-purple-300 transition-colors hover:text-purple-100 hover:underline">
-                ← Back to plans
-              </a>
-              <a
-                href={`/plans/${planRow.id}/log`}
-                class="text-sm text-purple-300 transition-colors hover:text-purple-100 hover:underline"
-              >
-                Log session
-              </a>
-            </div>
-            <EditPlanForm client:load plan={planRow} exercises={exerciseRows} />
+            <a
+              href={`/plans/${planRow.id}`}
+              class="text-sm text-purple-300 transition-colors hover:text-purple-100 hover:underline"
+            >
+              ← Back to plan
+            </a>
+            <LogSessionForm client:load plan={planRow} exercises={exerciseRows} />
           </>
+        ) : (
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+            <h1 class="mb-2 text-2xl font-bold text-white">Could not load exercises</h1>
+            <p class="mb-6 text-sm text-blue-100/60">This plan cannot be logged until its exercises load.</p>
+            <a
+              href={`/plans/${planRow.id}`}
+              class="text-purple-300 transition-colors hover:text-purple-100 hover:underline"
+            >
+              ← Back to plan
+            </a>
+          </div>
         )
       }
     </div>

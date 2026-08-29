@@ -314,34 +314,34 @@ If hosted lacks F-01, apply that migration first.
 
 #### Automated
 
-- [x] 1.1 New API module exports `prerender = false` and `POST`
-- [x] 1.2 Log schema lives outside plan-edit and generate schema files
-- [x] 1.3 RPC migration file exists under `supabase/migrations/`
-- [x] 1.4 `npm run lint` passes
-- [x] 1.5 `npm run build` passes
+- [x] 1.1 New API module exports `prerender = false` and `POST` — 97151be
+- [x] 1.2 Log schema lives outside plan-edit and generate schema files — 97151be
+- [x] 1.3 RPC migration file exists under `supabase/migrations/` — 97151be
+- [x] 1.4 `npm run lint` passes — 97151be
+- [x] 1.5 `npm run build` passes — 97151be
 
 #### Manual
 
-- [x] 1.6 Authenticated POST with ≥1 complete set creates one `sessions` row and matching `session_sets` (`set_number` unique per exercise)
-- [x] 1.7 Body with only blank-equivalent / empty `sets` returns 400 and no new `sessions` row
-- [x] 1.8 Unauthenticated POST returns 401
-- [x] 1.9 POST with another user’s `plan_id` returns 404 and does not insert
+- [x] 1.6 Authenticated POST with ≥1 complete set creates one `sessions` row and matching `session_sets` (`set_number` unique per exercise) — 97151be
+- [x] 1.7 Body with only blank-equivalent / empty `sets` returns 400 and no new `sessions` row — 97151be
+- [x] 1.8 Unauthenticated POST returns 401 — 97151be
+- [x] 1.9 POST with another user’s `plan_id` returns 404 and does not insert — 97151be
 
 ### Phase 2: Log page, sessions list, and navigation
 
 #### Automated
 
-- [ ] 2.1 Log island is mounted from `src/pages/plans/[id]/log.astro` with `client:load`
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npm run build` passes
+- [x] 2.1 Log island is mounted from `src/pages/plans/[id]/log.astro` with `client:load`
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.4 Signed-in owner: open plan → Log session → change at least one set → save → `/sessions` shows the new row at the top
-- [ ] 2.5 Prefill shows plan defaults; a fourth set can be added; a 9th cannot
-- [ ] 2.6 Blank extra rows are not stored (Studio: no null-reps rows)
-- [ ] 2.7 Signed-out `/sessions` and `/plans/[id]/log` redirect to sign-in
-- [ ] 2.8 API error (e.g. 400) shows in the island and does not navigate away
+- [x] 2.4 Signed-in owner: open plan → Log session → change at least one set → save → `/sessions` shows the new row at the top
+- [x] 2.5 Prefill shows plan defaults; a fourth set can be added; a 9th cannot
+- [x] 2.6 Blank extra rows are not stored (Studio: no null-reps rows)
+- [x] 2.7 Signed-out `/sessions` and `/plans/[id]/log` redirect to sign-in
+- [x] 2.8 API error (e.g. 400) shows in the island and does not navigate away
 
 ### Phase 3: Manual verification
 
