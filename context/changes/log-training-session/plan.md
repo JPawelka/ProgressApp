@@ -331,26 +331,26 @@ If hosted lacks F-01, apply that migration first.
 
 #### Automated
 
-- [x] 2.1 Log island is mounted from `src/pages/plans/[id]/log.astro` with `client:load`
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npm run build` passes
+- [x] 2.1 Log island is mounted from `src/pages/plans/[id]/log.astro` with `client:load` — 43204d0
+- [x] 2.2 `npm run lint` passes — 43204d0
+- [x] 2.3 `npm run build` passes — 43204d0
 
 #### Manual
 
-- [x] 2.4 Signed-in owner: open plan → Log session → change at least one set → save → `/sessions` shows the new row at the top
-- [x] 2.5 Prefill shows plan defaults; a fourth set can be added; a 9th cannot
-- [x] 2.6 Blank extra rows are not stored (Studio: no null-reps rows)
-- [x] 2.7 Signed-out `/sessions` and `/plans/[id]/log` redirect to sign-in
-- [x] 2.8 API error (e.g. 400) shows in the island and does not navigate away
+- [x] 2.4 Signed-in owner: open plan → Log session → change at least one set → save → `/sessions` shows the new row at the top — 43204d0
+- [x] 2.5 Prefill shows plan defaults; a fourth set can be added; a 9th cannot — 43204d0
+- [x] 2.6 Blank extra rows are not stored (Studio: no null-reps rows) — 43204d0
+- [x] 2.7 Signed-out `/sessions` and `/plans/[id]/log` redirect to sign-in — 43204d0
+- [x] 2.8 API error (e.g. 400) shows in the island and does not navigate away — 43204d0
 
 ### Phase 3: Manual verification
 
 #### Automated
 
-- [ ] 3.1 `context/changes/log-training-session/verification.md` exists with the steps above
+- [x] 3.1 `context/changes/log-training-session/verification.md` exists with the steps above
 
 #### Manual
 
-- [ ] 3.2 Happy path checklist completed
-- [ ] 3.3 Skip-empty and 8-set cap confirmed
-- [ ] 3.4 Auth gate and cross-user 404 confirmed
+- [x] 3.2 Happy path checklist completed
+- [x] 3.3 Skip-empty and 8-set cap confirmed
+- [x] 3.4 Auth gate and cross-user 404 confirmed
