@@ -347,11 +347,11 @@ If hosted Supabase lacks F-01, apply the existing migration before testing.
 
 #### Automated
 
-- [x] 3.1 `context/changes/edit-plan-exercises/verification.md` exists with the steps above
+- [x] 3.1 `context/changes/edit-plan-exercises/verification.md` exists with the steps above — 0a72c59
 
 #### Manual
 
-- [x] 3.2 Happy path checklist completed
-- [x] 3.3 Bounds (1–8) confirmed
-- [x] 3.4 Plan delete confirmed
-- [x] 3.5 Auth gate and cross-user 404 confirmed
+- [x] 3.2 Happy path checklist completed — 0a72c59
+- [x] 3.3 Bounds (1–8) confirmed — 0a72c59
+- [x] 3.4 Plan delete confirmed — 0a72c59
+- [x] 3.5 Auth gate and cross-user 404 confirmed — 0a72c59
