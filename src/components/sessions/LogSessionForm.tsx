@@ -25,10 +25,20 @@ interface SetDraft {
   load: string;
 }
 
+function fieldText(value: string | number | null | undefined): string {
+  if (value == null || value === "") {
+    return "";
+  }
+  if (typeof value === "number") {
+    return String(value);
+  }
+  return value;
+}
+
 function defaultDraft(exercise: PlanExercise): SetDraft {
   return {
     reps: exercise.default_reps == null ? "" : String(exercise.default_reps),
-    load: exercise.default_load_kg == null || exercise.default_load_kg === "" ? "" : String(exercise.default_load_kg),
+    load: fieldText(exercise.default_load_kg),
   };
 }
 
@@ -36,8 +46,8 @@ function initialRows(exercise: PlanExercise): SetDraft[] {
   return Array.from({ length: START_SETS }, () => defaultDraft(exercise));
 }
 
-function parseReps(value: unknown): number | null {
-  const trimmed = String(value ?? "").trim();
+function parseReps(value: string | number): number | null {
+  const trimmed = fieldText(value).trim();
   if (trimmed === "") {
     return null;
   }
@@ -48,8 +58,8 @@ function parseReps(value: unknown): number | null {
   return parsed;
 }
 
-function parseLoad(value: unknown): number | null {
-  const trimmed = String(value ?? "").trim();
+function parseLoad(value: string | number): number | null {
+  const trimmed = fieldText(value).trim();
   if (trimmed === "") {
     return null;
   }
