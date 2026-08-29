@@ -347,10 +347,10 @@ If hosted lacks F-01, apply that migration first.
 
 #### Automated
 
-- [x] 3.1 `context/changes/log-training-session/verification.md` exists with the steps above
+- [x] 3.1 `context/changes/log-training-session/verification.md` exists with the steps above — 356d2ca
 
 #### Manual
 
-- [x] 3.2 Happy path checklist completed
-- [x] 3.3 Skip-empty and 8-set cap confirmed
-- [x] 3.4 Auth gate and cross-user 404 confirmed
+- [x] 3.2 Happy path checklist completed — 356d2ca
+- [x] 3.3 Skip-empty and 8-set cap confirmed — 356d2ca
+- [x] 3.4 Auth gate and cross-user 404 confirmed — 356d2ca
