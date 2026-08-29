@@ -55,6 +55,8 @@ Three phases: (1) zod + services + JSON APIs for per-resource mutations with 1�
 
 **Cardinality is a server 409, not only a hidden button.** Count the owner’s exercises for that `plan_id` before insert/delete. POST when count ≥ 8 → 409, no insert. DELETE when count ≤ 1 → 409, no delete. Plan DELETE is always allowed (CASCADE removes children).
 
+**Concurrent cardinality:** Add and delete go through `add_plan_exercise` / `delete_plan_exercise` RPCs that `SELECT … FOR UPDATE` the parent plan row, then count and mutate, so overlapping requests cannot leave 0 or 9 exercises. Apply migration `supabase/migrations/20260829103000_plan_exercise_cardinality_rpc.sql` on the database the app uses (hosted project if `.dev.vars` points at `*.supabase.co`). Plan DELETE still uses table DELETE + CASCADE and is not blocked by the 1-exercise floor.
+
 **Zero-row update/delete is 404.** After RLS, `.update().eq("id")` / `.delete().eq("id")` that touches no rows means missing or not owned — return `{ error }` 404, not 200.
 
 **Confirm in the island, not `window.confirm`.** Match glass styling; require an explicit second click. Exercise copy: permanent remove from the plan. Plan copy: deletes the plan and its exercises (and later, any sessions).
@@ -309,37 +311,37 @@ If hosted Supabase lacks F-01, apply the existing migration before testing.
 
 #### Automated
 
-- [x] 1.1 New API modules export `prerender = false` and the HTTP methods above
-- [x] 1.2 Edit schemas live outside `plan-generation-schema.ts` (generate 3–8 array rules unchanged)
-- [x] 1.3 `npm run lint` passes
-- [x] 1.4 `npm run build` passes
+- [x] 1.1 New API modules export `prerender = false` and the HTTP methods above — 028d700
+- [x] 1.2 Edit schemas live outside `plan-generation-schema.ts` (generate 3–8 array rules unchanged) — 028d700
+- [x] 1.3 `npm run lint` passes — 028d700
+- [x] 1.4 `npm run build` passes — 028d700
 
 #### Manual
 
-- [x] 1.5 Authenticated PATCH plan name persists; reload of `/plans/[id]` shows it (or display fallback when name cleared)
-- [x] 1.6 Authenticated POST exercise appends with `sort_order` greater than existing max
-- [x] 1.7 9th exercise POST returns 409 and row count stays 8
-- [x] 1.8 DELETE last remaining exercise returns 409 and the row remains
-- [x] 1.9 Unauthenticated PATCH/DELETE/POST returns 401
-- [x] 1.10 PATCH/DELETE with another user’s plan/exercise id returns 404 and does not mutate that row (second account or Studio as other user)
+- [x] 1.5 Authenticated PATCH plan name persists; reload of `/plans/[id]` shows it (or display fallback when name cleared) — 028d700
+- [x] 1.6 Authenticated POST exercise appends with `sort_order` greater than existing max — 028d700
+- [x] 1.7 9th exercise POST returns 409 and row count stays 8 — 028d700
+- [x] 1.8 DELETE last remaining exercise returns 409 and the row remains — 028d700
+- [x] 1.9 Unauthenticated PATCH/DELETE/POST returns 401 — 028d700
+- [x] 1.10 PATCH/DELETE with another user’s plan/exercise id returns 404 and does not mutate that row (second account or Studio as other user) — 028d700
 
 ### Phase 2: In-place editor on plan detail
 
 #### Automated
 
-- [ ] 2.1 Editor island is mounted from `src/pages/plans/[id].astro` with `client:load`
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npm run build` passes
+- [x] 2.1 Editor island is mounted from `src/pages/plans/[id].astro` with `client:load`
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.4 Signed-in owner: change name, change one exercise’s reps/load, save, refresh — values stick
-- [ ] 2.5 Add exercise at the bottom; it appears last; add is unavailable at 8
-- [ ] 2.6 Delete exercise shows confirm; after confirm, row gone; last exercise cannot be removed (UI + 409)
-- [ ] 2.7 Delete plan shows confirm; after confirm, user is on `/plans` and the plan is gone from the list
-- [ ] 2.8 Goal cannot be changed on the detail page
-- [ ] 2.9 Signed-out `/plans/[id]` still redirects to sign-in
-- [ ] 2.10 API error (e.g. 409) shows in the island and does not navigate away
+- [x] 2.4 Signed-in owner: change name, change one exercise’s reps/load, save, refresh — values stick
+- [x] 2.5 Add exercise at the bottom; it appears last; add is unavailable at 8
+- [x] 2.6 Delete exercise shows confirm; after confirm, row gone; last exercise cannot be removed (UI + 409)
+- [x] 2.7 Delete plan shows confirm; after confirm, user is on `/plans` and the plan is gone from the list
+- [x] 2.8 Goal cannot be changed on the detail page
+- [x] 2.9 Signed-out `/plans/[id]` still redirects to sign-in
+- [x] 2.10 API error (e.g. 409) shows in the island and does not navigate away
 
 ### Phase 3: Manual verification
 
