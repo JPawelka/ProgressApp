@@ -329,29 +329,29 @@ If hosted Supabase lacks F-01, apply the existing migration before testing.
 
 #### Automated
 
-- [x] 2.1 Editor island is mounted from `src/pages/plans/[id].astro` with `client:load`
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npm run build` passes
+- [x] 2.1 Editor island is mounted from `src/pages/plans/[id].astro` with `client:load` — 5166ce4
+- [x] 2.2 `npm run lint` passes — 5166ce4
+- [x] 2.3 `npm run build` passes — 5166ce4
 
 #### Manual
 
-- [x] 2.4 Signed-in owner: change name, change one exercise’s reps/load, save, refresh — values stick
-- [x] 2.5 Add exercise at the bottom; it appears last; add is unavailable at 8
-- [x] 2.6 Delete exercise shows confirm; after confirm, row gone; last exercise cannot be removed (UI + 409)
-- [x] 2.7 Delete plan shows confirm; after confirm, user is on `/plans` and the plan is gone from the list
-- [x] 2.8 Goal cannot be changed on the detail page
-- [x] 2.9 Signed-out `/plans/[id]` still redirects to sign-in
-- [x] 2.10 API error (e.g. 409) shows in the island and does not navigate away
+- [x] 2.4 Signed-in owner: change name, change one exercise’s reps/load, save, refresh — values stick — 5166ce4
+- [x] 2.5 Add exercise at the bottom; it appears last; add is unavailable at 8 — 5166ce4
+- [x] 2.6 Delete exercise shows confirm; after confirm, row gone; last exercise cannot be removed (UI + 409) — 5166ce4
+- [x] 2.7 Delete plan shows confirm; after confirm, user is on `/plans` and the plan is gone from the list — 5166ce4
+- [x] 2.8 Goal cannot be changed on the detail page — 5166ce4
+- [x] 2.9 Signed-out `/plans/[id]` still redirects to sign-in — 5166ce4
+- [x] 2.10 API error (e.g. 409) shows in the island and does not navigate away — 5166ce4
 
 ### Phase 3: Manual verification
 
 #### Automated
 
-- [ ] 3.1 `context/changes/edit-plan-exercises/verification.md` exists with the steps above
+- [x] 3.1 `context/changes/edit-plan-exercises/verification.md` exists with the steps above
 
 #### Manual
 
-- [ ] 3.2 Happy path checklist completed
-- [ ] 3.3 Bounds (1–8) confirmed
-- [ ] 3.4 Plan delete confirmed
-- [ ] 3.5 Auth gate and cross-user 404 confirmed
+- [x] 3.2 Happy path checklist completed
+- [x] 3.3 Bounds (1–8) confirmed
+- [x] 3.4 Plan delete confirmed
+- [x] 3.5 Auth gate and cross-user 404 confirmed
