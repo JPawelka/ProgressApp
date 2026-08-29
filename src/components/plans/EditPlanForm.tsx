@@ -224,6 +224,7 @@ export default function EditPlanForm({ plan, exercises: initialExercises }: Edit
       window.location.href = "/plans";
     } catch {
       setError("Failed to delete plan");
+    } finally {
       setPending(null);
     }
   }

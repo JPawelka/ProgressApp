@@ -3,7 +3,7 @@ project: ProgressApp
 version: 1
 status: draft
 created: 2026-08-10
-updated: 2026-08-22
+updated: 2026-08-29
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -32,7 +32,7 @@ Self-directed lifters get stuck deciding whether to increase, hold, or deload �
 | F-01 | owner-scoped-persistence | (foundation) owner-scoped persistence contract for plans and session history | — | Access Control, Guardrails privacy | done |
 | S-01 | account-signin | create an account and sign in | — | FR-001 | done |
 | S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | done |
-| S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | proposed |
+| S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | in-progress |
 | S-04 | log-training-session | log a training session (sets / reps / loads) | S-03 | FR-004 | proposed |
 | S-05 | progression-suggest-override | receive a progression suggestion and accept or override it | S-04 | US-01, FR-005, FR-006 | proposed |
 
@@ -109,7 +109,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Edit UI can balloon scope; under `speed`, cover only what is needed so the logged session and progression still reflect the user's plan.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-04: Log training session
 
