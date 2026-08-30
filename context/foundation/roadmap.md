@@ -3,7 +3,7 @@ project: ProgressApp
 version: 1
 status: draft
 created: 2026-08-10
-updated: 2026-08-29
+updated: 2026-08-30
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -33,8 +33,8 @@ Self-directed lifters get stuck deciding whether to increase, hold, or deload �
 | S-01 | account-signin | create an account and sign in | — | FR-001 | done |
 | S-02 | ai-plan-from-goal | generate a training plan from a goal (mass / strength / endurance) | F-01, S-01 | FR-002 | done |
 | S-03 | edit-plan-exercises | view and edit their plans and exercises | S-02 | FR-003 | done |
-| S-04 | log-training-session | log a training session (sets / reps / loads) | S-03 | FR-004 | proposed |
-| S-05 | progression-suggest-override | receive a progression suggestion and accept or override it | S-04 | US-01, FR-005, FR-006 | proposed |
+| S-04 | log-training-session | log a training session (sets / reps / loads) | S-03 | FR-004 | done |
+| S-05 | progression-suggest-override | receive a progression suggestion and accept or override it | S-04 | US-01, FR-005, FR-006 | done |
 
 ## Streams
 
@@ -121,7 +121,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Incomplete logs can poison progression; capture enough structured set data for the rule, not a full workout social feed.
-- **Status:** proposed
+- **Status:** done
 
 ### S-05: Progression suggest and override
 
@@ -133,7 +133,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Wrong suggestions erode trust faster than no suggestions — keep the rule within clear increase/hold/deload bounds and always expose override; this is the north star, so ship it as soon as S-04 lands.
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -161,6 +161,8 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
+- **S-05: user can receive a progression suggestion and accept or override it** — Archived 2026-08-30 → `context/archive/2026-08-29-progression-suggest-override/`. Lesson: —.
+- **S-04: user can log a training session (sets / reps / loads)** — Archived 2026-08-29 → `context/archive/2026-08-29-log-training-session/`. Lesson: —.
 - **S-03: user can view and edit their plans and exercises** — Archived 2026-08-29 → `context/archive/2026-08-22-edit-plan-exercises/`. Lesson: —.
 - **S-02: user can generate a training plan from a goal (mass / strength / endurance)** — Archived 2026-08-22 → `context/archive/2026-08-16-ai-plan-from-goal/`. Lesson: —.
 - **S-01: user can create an account and sign in** — Archived 2026-08-16 → `context/archive/2026-08-11-account-signin/`. Lesson: —.
