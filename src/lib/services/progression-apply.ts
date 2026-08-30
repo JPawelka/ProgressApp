@@ -31,9 +31,7 @@ function throwFromRpcMessage(message: string | undefined): never {
     throw new ProgressionApplyValidationError("Invalid request");
   }
   if (text.includes("Could not find the function") || text.includes("schema cache")) {
-    throw new ProgressionApplyPersistError(
-      "Progression is not set up on the database. Run supabase/migrations/20260830221000_apply_progression_loads_rpc.sql in the SQL Editor.",
-    );
+    throw new ProgressionApplyPersistError("Progression is not set up on the database");
   }
   throw new ProgressionApplyPersistError(text);
 }
@@ -48,6 +46,9 @@ export function progressionApplyFailure(error: unknown): { error: string; status
   if (error instanceof ProgressionApplyPersistError) {
     console.error("Progression apply persist failed", error.message);
     if (error.message.startsWith("Progression is not set up")) {
+      console.error(
+        "Run supabase/migrations/20260830221000_apply_progression_loads_rpc.sql in the SQL Editor.",
+      );
       return { error: error.message, status: 503 };
     }
     return { error: "Failed to save progression", status: 500 };

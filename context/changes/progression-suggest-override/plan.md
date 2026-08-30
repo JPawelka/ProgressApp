@@ -289,7 +289,7 @@ MVP volume is small (≤8 exercises, ≤8 sets). One SSR read of session + sets 
 
 ## Migration Notes
 
-Phase 3 adds `apply_progression_loads`. No new tables. F-01 RLS on `plan_exercises` UPDATE already allows the owner; the RPC still uses `auth.uid()` and must not be `SECURITY DEFINER`. Hosted projects must run this SQL; a schema-cache miss looks like `Could not find the function public.apply_progression_loads`.
+Phase 3 adds `apply_progression_loads`. No new tables. F-01 RLS on `plan_exercises` UPDATE already allows the owner; the RPC still uses `auth.uid()` and must not be `SECURITY DEFINER`. Hosted projects must run this SQL; a schema-cache miss looks like `Could not find the function public.apply_progression_loads`. Persist may return 503 `{ error: "Progression is not set up on the database" }` when PostgREST has not loaded the function; log the migration path server-side only.
 
 Existing `default_load_kg` values stay until the owner Saves on a suggestion screen. Historical sessions are readable; visiting `/sessions/{id}/suggestion` for an old session computes the live rule against **current** `default_reps` (not advertised from the list).
 

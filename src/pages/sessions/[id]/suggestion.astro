@@ -57,7 +57,7 @@ if (supabase && id) {
         const coerced = coerceSet(set);
         return coerced ? [coerced] : [];
       });
-      suggestions = suggestProgression(
+      const computed = suggestProgression(
         exercisesResult.data.map((exercise) => ({
           id: exercise.id,
           name: exercise.name,
@@ -65,6 +65,28 @@ if (supabase && id) {
         })),
         sets,
       );
+      const loggedIds = new Set(setsResult.data.map((set) => set.plan_exercise_id));
+      const computedById = new Map(computed.map((row) => [row.plan_exercise_id, row]));
+      suggestions = exercisesResult.data.flatMap((exercise) => {
+        if (!loggedIds.has(exercise.id)) {
+          return [];
+        }
+        const row = computedById.get(exercise.id);
+        if (row) {
+          return [row];
+        }
+        const raw = exercise.default_load_kg == null ? Number.NaN : Number(exercise.default_load_kg);
+        const load = Number.isFinite(raw) ? Math.min(9999.99, Math.max(0, Math.round(raw * 100) / 100)) : 0;
+        return [
+          {
+            plan_exercise_id: exercise.id,
+            name: exercise.name,
+            decision: "hold",
+            suggested_load_kg: load,
+            heaviest_load_kg: load,
+          },
+        ];
+      });
     }
   }
 }
