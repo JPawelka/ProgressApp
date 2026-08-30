@@ -90,6 +90,16 @@ async function readError(response: Response): Promise<string> {
   }
 }
 
+async function readSessionId(response: Response): Promise<string | null> {
+  try {
+    const data = (await response.json()) as { session?: { id?: unknown } };
+    const id = data.session?.id;
+    return typeof id === "string" && id.length > 0 ? id : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function LogSessionForm({ plan, exercises }: LogSessionFormProps) {
   const [rows, setRows] = useState<Record<string, SetDraft[]>>(() =>
     Object.fromEntries(exercises.map((exercise) => [exercise.id, initialRows(exercise)])),
@@ -163,7 +173,12 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
         setError(await readError(response));
         return;
       }
-      window.location.href = "/sessions";
+      const sessionId = await readSessionId(response);
+      if (!sessionId) {
+        setError("Session saved but the suggestion page could not be opened");
+        return;
+      }
+      window.location.href = `/sessions/${sessionId}/suggestion`;
     } catch {
       setError("Failed to save session");
     } finally {

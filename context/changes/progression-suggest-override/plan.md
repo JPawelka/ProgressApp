@@ -313,33 +313,33 @@ Existing `default_load_kg` values stay until the owner Saves on a suggestion scr
 
 #### Automated
 
-- [x] 1.1 `npm test` (`vitest run`) passes, including the cases listed in the test contract
-- [x] 1.2 `vitest.config.ts` uses `getViteConfig` and `environment: "node"`
-- [x] 1.3 CI workflow runs `npm test` after lint and before build
-- [x] 1.4 `npm run lint` passes
-- [x] 1.5 `npm run build` passes
+- [x] 1.1 `npm test` (`vitest run`) passes, including the cases listed in the test contract — fbbbca0
+- [x] 1.2 `vitest.config.ts` uses `getViteConfig` and `environment: "node"` — fbbbca0
+- [x] 1.3 CI workflow runs `npm test` after lint and before build — fbbbca0
+- [x] 1.4 `npm run lint` passes — fbbbca0
+- [x] 1.5 `npm run build` passes — fbbbca0
 
 #### Manual
 
-- [x] 1.6 `AGENTS.md` / `CLAUDE.md` mention `npm test` so a later agent does not skip it
+- [x] 1.6 `AGENTS.md` / `CLAUDE.md` mention `npm test` so a later agent does not skip it — fbbbca0
 
 ### Phase 2: Post-log suggestion screen
 
 #### Automated
 
-- [ ] 2.1 Suggestion page file exists at `src/pages/sessions/[id]/suggestion.astro`
-- [ ] 2.2 `LogSessionForm` success path navigates to `/sessions/{id}/suggestion` using the 201 `session.id`
-- [ ] 2.3 `npm run lint` passes
-- [ ] 2.4 `npm run build` passes
-- [ ] 2.5 `npm test` still passes
+- [x] 2.1 Suggestion page file exists at `src/pages/sessions/[id]/suggestion.astro`
+- [x] 2.2 `LogSessionForm` success path navigates to `/sessions/{id}/suggestion` using the 201 `session.id`
+- [x] 2.3 `npm run lint` passes
+- [x] 2.4 `npm run build` passes
+- [x] 2.5 `npm test` still passes
 
 #### Manual
 
-- [ ] 2.6 Sign in, log a session with at least two exercises (one with all sets ≥ default reps, one that misses): land on the suggestion page with matching Increase / Deload (or Hold) labels and prefilled kg
-- [ ] 2.7 An exercise left blank on the log form does not appear on the suggestion page
-- [ ] 2.8 Skip returns to `/sessions`; Studio (or plan edit) shows `default_load_kg` unchanged
-- [ ] 2.9 Signed-out `/sessions/{id}/suggestion` redirects to sign-in
-- [ ] 2.10 Another user’s session id shows the not-found card and does not leak names
+- [x] 2.6 Sign in, log a session with at least two exercises (one with all sets ≥ default reps, one that misses): land on the suggestion page with matching Increase / Deload (or Hold) labels and prefilled kg
+- [x] 2.7 An exercise left blank on the log form does not appear on the suggestion page
+- [x] 2.8 Skip returns to `/sessions`; Studio (or plan edit) shows `default_load_kg` unchanged
+- [x] 2.9 Signed-out `/sessions/{id}/suggestion` redirects to sign-in
+- [x] 2.10 Another user’s session id shows the not-found card and does not leak names
 
 ### Phase 3: Apply chosen loads
 

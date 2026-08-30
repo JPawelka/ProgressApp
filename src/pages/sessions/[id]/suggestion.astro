@@ -1,0 +1,104 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
+import SuggestionForm from "@/components/sessions/SuggestionForm";
+import { createClient } from "@/lib/supabase";
+import {
+  suggestProgression,
+  type ProgressionSetInput,
+  type ProgressionSuggestion,
+} from "@/lib/progression/progression-rule";
+import type { PlanExercise, Session, SessionSet } from "@/types";
+
+const { id } = Astro.params;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+interface RowResult<T> {
+  data: T | null;
+  error: { message: string } | null;
+}
+
+let sessionRow: Session | null = null;
+let suggestions: ProgressionSuggestion[] = [];
+let loadFailed = false;
+
+function coerceSet(set: SessionSet): ProgressionSetInput | null {
+  if (set.reps == null || set.load_kg == null) {
+    return null;
+  }
+  const load_kg = Number(set.load_kg);
+  if (!Number.isFinite(load_kg)) {
+    return null;
+  }
+  return { plan_exercise_id: set.plan_exercise_id, reps: set.reps, load_kg };
+}
+
+if (supabase && id) {
+  const sessionResult = (await supabase.from("sessions").select("*").eq("id", id).maybeSingle()) as RowResult<Session>;
+
+  if (sessionResult.error || !sessionResult.data) {
+    sessionRow = null;
+  } else {
+    sessionRow = sessionResult.data;
+
+    const [setsResult, exercisesResult] = (await Promise.all([
+      supabase.from("session_sets").select("*").eq("session_id", id),
+      supabase
+        .from("plan_exercises")
+        .select("*")
+        .eq("plan_id", sessionRow.plan_id)
+        .order("sort_order", { ascending: true }),
+    ])) as [RowResult<SessionSet[]>, RowResult<PlanExercise[]>];
+
+    if (setsResult.error || !setsResult.data || exercisesResult.error || !exercisesResult.data) {
+      loadFailed = true;
+    } else {
+      const sets = setsResult.data.flatMap((set) => {
+        const coerced = coerceSet(set);
+        return coerced ? [coerced] : [];
+      });
+      suggestions = suggestProgression(
+        exercisesResult.data.map((exercise) => ({
+          id: exercise.id,
+          name: exercise.name,
+          default_reps: exercise.default_reps,
+        })),
+        sets,
+      );
+    }
+  }
+}
+
+const pageTitle = sessionRow && !loadFailed ? "Next session" : "Session not found";
+const showForm = sessionRow && !loadFailed;
+---
+
+<Layout title={pageTitle}>
+  <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+    <Topbar />
+
+    <div class="mx-auto max-w-2xl space-y-6 py-8">
+      {
+        !sessionRow ? (
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+            <h1 class="mb-2 text-2xl font-bold text-white">Session not found</h1>
+            <p class="mb-6 text-sm text-blue-100/60">This session does not exist or you do not have access to it.</p>
+            <a href="/sessions" class="text-purple-300 transition-colors hover:text-purple-100 hover:underline">
+              ← Back to sessions
+            </a>
+          </div>
+        ) : showForm ? (
+          <SuggestionForm client:load suggestions={suggestions} />
+        ) : (
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+            <h1 class="mb-2 text-2xl font-bold text-white">Could not load suggestions</h1>
+            <p class="mb-6 text-sm text-blue-100/60">This session loaded, but its sets or exercises could not.</p>
+            <a href="/sessions" class="text-purple-300 transition-colors hover:text-purple-100 hover:underline">
+              ← Back to sessions
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</Layout>
