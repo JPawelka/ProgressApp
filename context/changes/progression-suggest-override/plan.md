@@ -327,35 +327,35 @@ Existing `default_load_kg` values stay until the owner Saves on a suggestion scr
 
 #### Automated
 
-- [x] 2.1 Suggestion page file exists at `src/pages/sessions/[id]/suggestion.astro`
-- [x] 2.2 `LogSessionForm` success path navigates to `/sessions/{id}/suggestion` using the 201 `session.id`
-- [x] 2.3 `npm run lint` passes
-- [x] 2.4 `npm run build` passes
-- [x] 2.5 `npm test` still passes
+- [x] 2.1 Suggestion page file exists at `src/pages/sessions/[id]/suggestion.astro` — 8dbcf3a
+- [x] 2.2 `LogSessionForm` success path navigates to `/sessions/{id}/suggestion` using the 201 `session.id` — 8dbcf3a
+- [x] 2.3 `npm run lint` passes — 8dbcf3a
+- [x] 2.4 `npm run build` passes — 8dbcf3a
+- [x] 2.5 `npm test` still passes — 8dbcf3a
 
 #### Manual
 
-- [x] 2.6 Sign in, log a session with at least two exercises (one with all sets ≥ default reps, one that misses): land on the suggestion page with matching Increase / Deload (or Hold) labels and prefilled kg
-- [x] 2.7 An exercise left blank on the log form does not appear on the suggestion page
-- [x] 2.8 Skip returns to `/sessions`; Studio (or plan edit) shows `default_load_kg` unchanged
-- [x] 2.9 Signed-out `/sessions/{id}/suggestion` redirects to sign-in
-- [x] 2.10 Another user’s session id shows the not-found card and does not leak names
+- [x] 2.6 Sign in, log a session with at least two exercises (one with all sets ≥ default reps, one that misses): land on the suggestion page with matching Increase / Deload (or Hold) labels and prefilled kg — 8dbcf3a
+- [x] 2.7 An exercise left blank on the log form does not appear on the suggestion page — 8dbcf3a
+- [x] 2.8 Skip returns to `/sessions`; Studio (or plan edit) shows `default_load_kg` unchanged — 8dbcf3a
+- [x] 2.9 Signed-out `/sessions/{id}/suggestion` redirects to sign-in — 8dbcf3a
+- [x] 2.10 Another user’s session id shows the not-found card and does not leak names — 8dbcf3a
 
 ### Phase 3: Apply chosen loads
 
 #### Automated
 
-- [ ] 3.1 RPC migration file exists under `supabase/migrations/`
-- [ ] 3.2 New API module exports `prerender = false` and `POST`
-- [ ] 3.3 `npm run lint` passes
-- [ ] 3.4 `npm run build` passes
-- [ ] 3.5 `npm test` still passes
+- [x] 3.1 RPC migration file exists under `supabase/migrations/`
+- [x] 3.2 New API module exports `prerender = false` and `POST`
+- [x] 3.3 `npm run lint` passes
+- [x] 3.4 `npm run build` passes
+- [x] 3.5 `npm test` still passes
 
 #### Manual
 
-- [ ] 3.6 Accept all after an increase suggestion: that exercise’s `default_load_kg` becomes heaviest+2.5 (2 decimals); next log prefills it
-- [ ] 3.7 Edit a kg then Save: plan default matches the edited number, not the original suggestion
-- [ ] 3.8 Skip still leaves defaults unchanged
-- [ ] 3.9 Save a second time on the same suggestion URL writes the same loads (no extra +2.5)
-- [ ] 3.10 Unauthenticated POST → 401; another user’s session id → 404 and no writes
-- [ ] 3.11 Payload that includes a skipped exercise or omits a logged one → 400 and no writes
+- [x] 3.6 Accept all after an increase suggestion: that exercise’s `default_load_kg` becomes heaviest+2.5 (2 decimals); next log prefills it
+- [x] 3.7 Edit a kg then Save: plan default matches the edited number, not the original suggestion
+- [x] 3.8 Skip still leaves defaults unchanged
+- [x] 3.9 Save a second time on the same suggestion URL writes the same loads (no extra +2.5)
+- [x] 3.10 Unauthenticated POST → 401; another user’s session id → 404 and no writes
+- [x] 3.11 Payload that includes a skipped exercise or omits a logged one → 400 and no writes

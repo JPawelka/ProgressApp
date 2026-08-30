@@ -88,7 +88,7 @@ const showForm = sessionRow && !loadFailed;
             </a>
           </div>
         ) : showForm ? (
-          <SuggestionForm client:load suggestions={suggestions} />
+          <SuggestionForm client:load sessionId={sessionRow.id} suggestions={suggestions} />
         ) : (
           <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
             <h1 class="mb-2 text-2xl font-bold text-white">Could not load suggestions</h1>
