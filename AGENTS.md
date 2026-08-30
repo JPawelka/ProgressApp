@@ -10,12 +10,14 @@ ProgressApp is an Astro 6 SSR app (React 19 islands, Tailwind 4, Supabase auth) 
 - API handlers: uppercase `GET`/`POST` only; validate bodies/params with zod.
 - Merge Tailwind classes with `cn()` from `@/lib/utils`. No Next.js `"use client"`. Extract hooks to `src/components/hooks/`. Shared entities/DTOs go in @src/types.ts.
 - Never commit secrets. Use `SUPABASE_URL` / `SUPABASE_KEY` from @.env.example (`.env` for Node, `.dev.vars` for Wrangler). Env is server-only via `astro:env/server` in @astro.config.mjs — do **not** use removed `Astro.locals.runtime.env` (Astro 5 tutorials). Prefer `import { env } from "cloudflare:workers"` only when reading Worker bindings. Deploy with `npx wrangler deploy` (@wrangler.jsonc; Worker name `progressapp`).
-- **Deploy path:** Cloudflare **Workers Builds** auto-deploys on push to `main` once connected. GitHub Actions (@.github/workflows/ci.yml) stays **lint + build only** — no GHA deploy. Keep secrets split: `.dev.vars` (local), Workers Builds build vars, Worker runtime secrets (`wrangler secret put`), GHA repo secrets (CI build).
+- **Deploy path:** Cloudflare **Workers Builds** auto-deploys on push to `main` once connected. GitHub Actions (@.github/workflows/ci.yml) stays **lint + test + build** — no GHA deploy. Keep secrets split: `.dev.vars` (local), Workers Builds build vars, Worker runtime secrets (`wrangler secret put`), GHA repo secrets (CI build).
 
 ## Build, Test, and Development Commands
 
-- Scripts: @package.json. Caveats: `dev` runs Cloudflare workerd SSR; `build` needs Supabase env; no unit/e2e test runner yet.
-- Use Node `22.14.0` (@.nvmrc).
+- `npm run dev` — Cloudflare workerd SSR
+- `npm test` — Vitest unit tests (`vitest run`); no e2e runner yet. Also runs in the pre-commit hook; a failing run aborts the commit.
+- `npm run lint` / `npm run build` — type-checked ESLint; production build (needs Supabase env)
+- Use Node `22.14.0` (@.nvmrc). Scripts live in @package.json.
 
 ## Project Structure & Module Organization
 
@@ -26,9 +28,9 @@ ProgressApp is an Astro 6 SSR app (React 19 islands, Tailwind 4, Supabase auth) 
 
 - Import with `@/*` → `src/*` (@tsconfig.json).
 - Prefer Astro for static content; React only when interactivity is required. Add shadcn pieces with `npx shadcn@latest add <name>` into `src/components/ui/` ("new-york").
-- Husky/lint-staged: eslint on `*.{ts,tsx,astro}`, prettier on `*.{json,css,md}` (@eslint.config.js, @.prettierrc.json).
+- Husky pre-commit: lint-staged (eslint on `*.{ts,tsx,astro}`, prettier on `*.{json,css,md}`) then **`npm test`**. A failing test run blocks the commit.
 
 ## Commit & Pull Request Guidelines
 
 - History is thin; use imperative, specific titles (observed: descriptive scaffold commit, not Conventional Commits prefixes).
-- CI (@.github/workflows/ci.yml) on push/PR to `main`: `npm ci` → `npx astro sync` → lint → build. Build needs repository secrets `SUPABASE_URL` and `SUPABASE_KEY`. Align PR target with that workflow branch.
+- CI (@.github/workflows/ci.yml) on push/PR to `main`: `npm ci` → `npx astro sync` → lint → **`npm test`** → build. That is when tests run automatically. Build needs repository secrets `SUPABASE_URL` and `SUPABASE_KEY`. Align PR target with that workflow branch.

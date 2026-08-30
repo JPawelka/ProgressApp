@@ -1,4 +1,5 @@
 // @ts-check
+import process from "node:process";
 import { defineConfig, envField } from "astro/config";
 
 import react from "@astrojs/react";
@@ -19,7 +20,8 @@ export default defineConfig({
       noExternal: ["zod"],
     },
   },
-  adapter: cloudflare(),
+  // Vitest injects Node builtins into resolve.external; Cloudflare's Vite plugin rejects that.
+  adapter: process.env.VITEST ? undefined : cloudflare(),
   env: {
     schema: {
       SUPABASE_URL: envField.string({ context: "server", access: "secret", optional: true }),
