@@ -345,17 +345,17 @@ Existing `default_load_kg` values stay until the owner Saves on a suggestion scr
 
 #### Automated
 
-- [x] 3.1 RPC migration file exists under `supabase/migrations/`
-- [x] 3.2 New API module exports `prerender = false` and `POST`
-- [x] 3.3 `npm run lint` passes
-- [x] 3.4 `npm run build` passes
-- [x] 3.5 `npm test` still passes
+- [x] 3.1 RPC migration file exists under `supabase/migrations/` — fe04b82
+- [x] 3.2 New API module exports `prerender = false` and `POST` — fe04b82
+- [x] 3.3 `npm run lint` passes — fe04b82
+- [x] 3.4 `npm run build` passes — fe04b82
+- [x] 3.5 `npm test` still passes — fe04b82
 
 #### Manual
 
-- [x] 3.6 Accept all after an increase suggestion: that exercise’s `default_load_kg` becomes heaviest+2.5 (2 decimals); next log prefills it
-- [x] 3.7 Edit a kg then Save: plan default matches the edited number, not the original suggestion
-- [x] 3.8 Skip still leaves defaults unchanged
-- [x] 3.9 Save a second time on the same suggestion URL writes the same loads (no extra +2.5)
-- [x] 3.10 Unauthenticated POST → 401; another user’s session id → 404 and no writes
-- [x] 3.11 Payload that includes a skipped exercise or omits a logged one → 400 and no writes
+- [x] 3.6 Accept all after an increase suggestion: that exercise’s `default_load_kg` becomes heaviest+2.5 (2 decimals); next log prefills it — fe04b82
+- [x] 3.7 Edit a kg then Save: plan default matches the edited number, not the original suggestion — fe04b82
+- [x] 3.8 Skip still leaves defaults unchanged — fe04b82
+- [x] 3.9 Save a second time on the same suggestion URL writes the same loads (no extra +2.5) — fe04b82
+- [x] 3.10 Unauthenticated POST → 401; another user’s session id → 404 and no writes — fe04b82
+- [x] 3.11 Payload that includes a skipped exercise or omits a logged one → 400 and no writes — fe04b82
