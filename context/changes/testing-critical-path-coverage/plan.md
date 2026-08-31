@@ -268,23 +268,23 @@ No database migration. Hosted schema unchanged. Removing the fallback can yield 
 
 #### Automated
 
-- [x] 2.1 `sessionIdFromLogResponse` and write-set builders are used by the form/island
-- [x] 2.2 Skip in `SuggestionForm.tsx` is still an `<a href="/sessions">` with no `fetch` on that control
-- [x] 2.3 `npm test` includes the session-id, write-set, and apply-schema cases above
-- [x] 2.4 `npm run lint` passes
+- [x] 2.1 `sessionIdFromLogResponse` and write-set builders are used by the form/island — c147881
+- [x] 2.2 Skip in `SuggestionForm.tsx` is still an `<a href="/sessions">` with no `fetch` on that control — c147881
+- [x] 2.3 `npm test` includes the session-id, write-set, and apply-schema cases above — c147881
+- [x] 2.4 `npm run lint` passes — c147881
 
 #### Manual
 
-- [x] 2.5 Skip from a suggestion screen returns to `/sessions` without changing plan default loads (Studio or plan edit)
+- [x] 2.5 Skip from a suggestion screen returns to `/sessions` without changing plan default loads (Studio or plan edit) — c147881
 
 ### Phase 3: Cookbook
 
 #### Automated
 
-- [ ] 3.1 `context/foundation/test-plan.md` §6.1 is no longer TBD
-- [ ] 3.2 `npm test` still passes
-- [ ] 3.3 `npm run lint` passes
+- [x] 3.1 `context/foundation/test-plan.md` §6.1 is no longer TBD
+- [x] 3.2 `npm test` still passes
+- [x] 3.3 `npm run lint` passes
 
 #### Manual
 
-- [ ] 3.4 Skim §6: a new unit test for a progression helper would follow §6.1 without opening Playwright
+- [x] 3.4 Skim §6: a new unit test for a progression helper would follow §6.1 without opening Playwright
