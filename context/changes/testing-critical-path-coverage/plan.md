@@ -281,10 +281,10 @@ No database migration. Hosted schema unchanged. Removing the fallback can yield 
 
 #### Automated
 
-- [x] 3.1 `context/foundation/test-plan.md` §6.1 is no longer TBD
-- [x] 3.2 `npm test` still passes
-- [x] 3.3 `npm run lint` passes
+- [x] 3.1 `context/foundation/test-plan.md` §6.1 is no longer TBD — 92a9ea2
+- [x] 3.2 `npm test` still passes — 92a9ea2
+- [x] 3.3 `npm run lint` passes — 92a9ea2
 
 #### Manual
 
-- [x] 3.4 Skim §6: a new unit test for a progression helper would follow §6.1 without opening Playwright
+- [x] 3.4 Skim §6: a new unit test for a progression helper would follow §6.1 without opening Playwright — 92a9ea2
