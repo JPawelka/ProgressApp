@@ -255,27 +255,27 @@ No database migration. Hosted schema unchanged. Removing the fallback can yield 
 
 #### Automated
 
-- [x] 1.1 `src/lib/progression/logged-suggestions.ts` exports `coerceSessionSet` and `buildLoggedSuggestions`
-- [x] 1.2 `suggestion.astro` does not read `default_load_kg`
-- [x] 1.3 `npm test` covers contract-shaped rule expecteds, non-finite drop, string coerce, omit of unlogged / un-coercible lifts
-- [x] 1.4 `npm run lint` passes
+- [x] 1.1 `src/lib/progression/logged-suggestions.ts` exports `coerceSessionSet` and `buildLoggedSuggestions` — ccde455
+- [x] 1.2 `suggestion.astro` does not read `default_load_kg` — ccde455
+- [x] 1.3 `npm test` covers contract-shaped rule expecteds, non-finite drop, string coerce, omit of unlogged / un-coercible lifts — ccde455
+- [x] 1.4 `npm run lint` passes — ccde455
 
 #### Manual
 
-- [x] 1.5 Log a session with one complete lift and one left blank: suggestion page lists only the logged lift (no invented hold for the blank)
+- [x] 1.5 Log a session with one complete lift and one left blank: suggestion page lists only the logged lift (no invented hold for the blank) — ccde455
 
 ### Phase 2: Log id + apply write-set
 
 #### Automated
 
-- [ ] 2.1 `sessionIdFromLogResponse` and write-set builders are used by the form/island
-- [ ] 2.2 Skip in `SuggestionForm.tsx` is still an `<a href="/sessions">` with no `fetch` on that control
-- [ ] 2.3 `npm test` includes the session-id, write-set, and apply-schema cases above
-- [ ] 2.4 `npm run lint` passes
+- [x] 2.1 `sessionIdFromLogResponse` and write-set builders are used by the form/island
+- [x] 2.2 Skip in `SuggestionForm.tsx` is still an `<a href="/sessions">` with no `fetch` on that control
+- [x] 2.3 `npm test` includes the session-id, write-set, and apply-schema cases above
+- [x] 2.4 `npm run lint` passes
 
 #### Manual
 
-- [ ] 2.5 Skip from a suggestion screen returns to `/sessions` without changing plan default loads (Studio or plan edit)
+- [x] 2.5 Skip from a suggestion screen returns to `/sessions` without changing plan default loads (Studio or plan edit)
 
 ### Phase 3: Cookbook
 

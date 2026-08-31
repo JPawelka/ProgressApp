@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { ServerError } from "@/components/auth/ServerError";
 import { Button } from "@/components/ui/button";
 import { planDisplayName } from "@/lib/plans/display";
+import { sessionIdFromLogResponse } from "@/lib/sessions/session-id-from-log-response";
 import { cn } from "@/lib/utils";
 import type { Plan, PlanExercise } from "@/types";
 
@@ -90,16 +91,6 @@ async function readError(response: Response): Promise<string> {
   }
 }
 
-async function readSessionId(response: Response): Promise<string | null> {
-  try {
-    const data = (await response.json()) as { session?: { id?: unknown } };
-    const id = data.session?.id;
-    return typeof id === "string" && id.length > 0 ? id : null;
-  } catch {
-    return null;
-  }
-}
-
 export default function LogSessionForm({ plan, exercises }: LogSessionFormProps) {
   const [rows, setRows] = useState<Record<string, SetDraft[]>>(() =>
     Object.fromEntries(exercises.map((exercise) => [exercise.id, initialRows(exercise)])),
@@ -173,7 +164,14 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
         setError(await readError(response));
         return;
       }
-      const sessionId = await readSessionId(response);
+      let data: unknown;
+      try {
+        data = await response.json();
+      } catch {
+        setError("Session saved but the suggestion page could not be opened");
+        return;
+      }
+      const sessionId = sessionIdFromLogResponse(data);
       if (!sessionId) {
         setError("Session saved but the suggestion page could not be opened");
         return;

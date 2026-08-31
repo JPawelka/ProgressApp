@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { ServerError } from "@/components/auth/ServerError";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { buildAcceptAllLoads, buildSaveLoads } from "@/lib/progression/progression-write-set";
 import type { ProgressionDecision, ProgressionSuggestion } from "@/lib/progression/progression-rule";
 
 const inputClass = cn(
@@ -20,22 +21,6 @@ const DECISION_LABEL: Record<ProgressionDecision, string> = {
 interface SuggestionFormProps {
   sessionId: string;
   suggestions: ProgressionSuggestion[];
-}
-
-function parseLoad(value: string): number | null {
-  const trimmed = value.trim();
-  if (trimmed === "") {
-    return null;
-  }
-  return Number(trimmed);
-}
-
-function completeLoad(value: string): number | null {
-  const load = parseLoad(value);
-  if (load === null || !Number.isFinite(load) || load < 0 || load > 9999.99) {
-    return null;
-  }
-  return load;
 }
 
 async function readError(response: Response): Promise<string> {
@@ -76,25 +61,16 @@ export default function SuggestionForm({ sessionId, suggestions }: SuggestionFor
   }
 
   function save() {
-    const rows: { plan_exercise_id: string; load_kg: number }[] = [];
-    for (const suggestion of suggestions) {
-      const load = completeLoad(loads[suggestion.plan_exercise_id] ?? "");
-      if (load === null) {
-        setError("Enter a load between 0 and 9999.99 for every exercise");
-        return;
-      }
-      rows.push({ plan_exercise_id: suggestion.plan_exercise_id, load_kg: load });
+    const result = buildSaveLoads(suggestions, loads);
+    if (!result.ok) {
+      setError("Enter a load between 0 and 9999.99 for every exercise");
+      return;
     }
-    void submit(rows);
+    void submit(result.loads);
   }
 
   function acceptAll() {
-    void submit(
-      suggestions.map((row) => ({
-        plan_exercise_id: row.plan_exercise_id,
-        load_kg: row.suggested_load_kg,
-      })),
-    );
+    void submit(buildAcceptAllLoads(suggestions));
   }
 
   return (
