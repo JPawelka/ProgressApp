@@ -1,6 +1,10 @@
 import { expect, test } from "vitest";
 import { suggestProgression } from "./progression-rule";
 
+// Archive Phase 1: increase = heaviest + 2.5 kg; deload = heaviest × 0.9
+const INCREASE_KG = 2.5;
+const DELOAD_FACTOR = 0.9;
+
 const squat = { id: "squat", name: "Squat", default_reps: 5 };
 const bench = { id: "bench", name: "Bench", default_reps: 8 };
 const row = { id: "row", name: "Row", default_reps: 10 };
@@ -21,7 +25,7 @@ test("all sets hitting target increase from the heaviest load", () => {
       plan_exercise_id: "squat",
       name: "Squat",
       decision: "increase",
-      suggested_load_kg: 102.5,
+      suggested_load_kg: 100 + INCREASE_KG,
       heaviest_load_kg: 100,
     },
   ]);
@@ -41,7 +45,7 @@ test("all sets missing target deload from the heaviest load", () => {
       plan_exercise_id: "bench",
       name: "Bench",
       decision: "deload",
-      suggested_load_kg: 72,
+      suggested_load_kg: 80 * DELOAD_FACTOR,
       heaviest_load_kg: 80,
     },
   ]);
@@ -101,14 +105,14 @@ test("exercises with no sets are omitted and remaining keep input order", () => 
       plan_exercise_id: "squat",
       name: "Squat",
       decision: "increase",
-      suggested_load_kg: 102.5,
+      suggested_load_kg: 100 + INCREASE_KG,
       heaviest_load_kg: 100,
     },
     {
       plan_exercise_id: "row",
       name: "Row",
       decision: "increase",
-      suggested_load_kg: 62.5,
+      suggested_load_kg: 60 + INCREASE_KG,
       heaviest_load_kg: 60,
     },
   ]);
@@ -129,7 +133,7 @@ test("mixed loads still increase from the heaviest when every set hits", () => {
       plan_exercise_id: "squat",
       name: "Squat",
       decision: "increase",
-      suggested_load_kg: 102.5,
+      suggested_load_kg: 100 + INCREASE_KG,
       heaviest_load_kg: 100,
     },
   ]);
@@ -165,8 +169,29 @@ test("deload rounds to two decimal places", () => {
       plan_exercise_id: "bench",
       name: "Bench",
       decision: "deload",
-      suggested_load_kg: 74.25,
+      suggested_load_kg: 82.5 * DELOAD_FACTOR,
       heaviest_load_kg: 82.5,
+    },
+  ]);
+});
+
+test("non-finite sibling sets are ignored when another set is valid", () => {
+  expect(
+    suggestProgression(
+      [squat],
+      [
+        { plan_exercise_id: "squat", reps: 5, load_kg: Number.NaN },
+        { plan_exercise_id: "squat", reps: Number.POSITIVE_INFINITY, load_kg: 100 },
+        { plan_exercise_id: "squat", reps: 5, load_kg: 100 },
+      ],
+    ),
+  ).toEqual([
+    {
+      plan_exercise_id: "squat",
+      name: "Squat",
+      decision: "increase",
+      suggested_load_kg: 100 + INCREASE_KG,
+      heaviest_load_kg: 100,
     },
   ]);
 });

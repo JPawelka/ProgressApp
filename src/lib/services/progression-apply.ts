@@ -46,9 +46,7 @@ export function progressionApplyFailure(error: unknown): { error: string; status
   if (error instanceof ProgressionApplyPersistError) {
     console.error("Progression apply persist failed", error.message);
     if (error.message.startsWith("Progression is not set up")) {
-      console.error(
-        "Run supabase/migrations/20260830221000_apply_progression_loads_rpc.sql in the SQL Editor.",
-      );
+      console.error("Run supabase/migrations/20260830221000_apply_progression_loads_rpc.sql in the SQL Editor.");
       return { error: error.message, status: 503 };
     }
     return { error: "Failed to save progression", status: 500 };
