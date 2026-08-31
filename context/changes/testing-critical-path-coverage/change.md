@@ -1,7 +1,7 @@
 ---
 change_id: testing-critical-path-coverage
 title: Critical-path tests for suggestion, skip/apply, and rule bounds
-status: implemented
+status: impl_reviewed
 created: 2026-08-31
 updated: 2026-08-31
 archived_at: null
