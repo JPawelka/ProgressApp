@@ -57,11 +57,11 @@ OpenRouter / host outage is High × Low — observability, not this rollout.
 |---|---|---|---|---|---|
 | #1 | After a successful log, the owner is offered increase/hold/deload + load for logged exercises; a missing session id does not silently skip that screen | “Log success implies the suggestion loop ran” | Log response → suggestion entry; skipped lifts omitted; unauthenticated vs owner | Integration on the log→suggestion contract | e2e gym tour; using the current redirect string as the oracle |
 | #2 | Failed persist is visible as failure; posted complete sets are the ones that must land (or the call fails); incomplete POST elements are 400, not a 201 session. Incomplete UI drafts are omitted, not stored. | “Success status means the workout exists as entered” | Persist boundary, completeness rule, error translation | Unit: log schema + `sessionLogFailure` + omit/renumber builder; in-process fake client for generate persist | Live `SELECT`; re-testing Postgres; inventing “all exercises must be logged”; mirroring handler internals |
-| #3 | Other user’s id yields 401/404 and no row change on their plan/session | “Logged in is enough” (auth ≠ ownership) | Ownership on GET vs mutate; zero-row vs data leak | Integration with two identities | Mocking RLS away; only testing the unauthenticated redirect |
+| #3 | Other user’s id yields 401/404 and no row change on their plan/session | “Logged in is enough” (auth ≠ ownership) | Ownership on GET vs mutate; zero-row vs data leak | Service + in-process fake client/rpc: `user_id` / stolen id → 404 and no success object. Live two-JWT remains manual/archive until a later infra phase | Mocking RLS away; only testing the unauthenticated redirect |
 | #4 | Non-success / error payload from generate, log, or apply is shown; missing success id stays with an error and does not navigate | “If the island is still mounted, the user saw the error” | Error payload shape vs what the island renders | Unit on parse helpers (`errorMessageFromBody`, `planIdFromGenerateResponse`) under Vitest `node` | Pixel snapshots; Playwright; jsdom island mount |
 | #5 | Skip leaves defaults unchanged; Accept all writes suggestions; Save writes field values; skipped lifts are not in the write set | “Suggestion screen shown means loads were applied” | Apply contract vs skip navigation | Integration on apply vs skip | Happy-path Accept all only |
 | #6 | Decision + kg match the locked PRD rule (hits vs default reps, heaviest, +2.5), not whatever is currently shown | “Existing rule tests mean apply cannot be wrong” | Oracle = PRD/archive rule, not production output copied back | Unit with independent oracle | Implementation mirror |
-| #7 | Invalid body is 4xx and not stored; foreign/cross-plan ids do not attach | “Client validation is enough” | Server schema vs lineage rules | Integration at POST handlers | Testing only the TypeScript type |
+| #7 | Invalid body is 4xx and not stored; foreign/cross-plan ids do not attach | “Client validation is enough” | Server schema vs lineage rules | Schema units for generate/edit; fake `rpc` for foreign UUID → 404 / Invalid loads → 400. Do not treat `z.infer` as coverage. Do not re-test log/apply shape cases already in Phases 1–2 | Testing only the TypeScript type |
 
 ## 3. Phased Rollout
 
@@ -72,8 +72,8 @@ orchestrator updates Status as artifacts appear on disk.
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|---|---|---|---|---|---|
 | 1 | Critical-path coverage | Prove suggestion appears after log; skip/accept/save match the contract; loads obey the locked rule | #1, #5, #6 | unit + integration | complete | testing-critical-path-coverage |
-| 2 | Persist and error visibility | Prove plan/session saves are real and generate/log/apply failures are visible | #2, #4 | integration + island tests | change opened | testing-persist-and-error-visibility |
-| 3 | Owner isolation and untrusted input | Prove cross-user id is 401/404 with no write, and invalid bodies are rejected | #3, #7 | integration | not started | — |
+| 2 | Persist and error visibility | Prove plan/session saves are real and generate/log/apply failures are visible | #2, #4 | integration + island tests | complete | testing-persist-and-error-visibility |
+| 3 | Owner isolation and untrusted input | Prove cross-user id is 401/404 with no write, and invalid bodies are rejected | #3, #7 | integration | change opened | testing-owner-isolation-and-untrusted-input |
 
 ## 4. Stack
 
@@ -85,12 +85,12 @@ plus the MCP/tools actually exposed in the current session.
 | Layer | Tool | Version | Notes |
 |---|---|---|---|
 | unit + integration | Vitest via Astro `getViteConfig` | ^4.1.11 | `environment: node` (Astro 6); `npm test` = `vitest run`; pre-commit + CI already run it. Helpers under `src/lib/progression/`, `src/lib/sessions/`, `src/lib/http/`, `src/lib/plans/`, `src/lib/services/` |
-| API mocking | in-process fake client | — | Generate persist only (`persistGeneratedPlan` tests). No mock library, no local Supabase, no `APIContext` handler suite |
+| API mocking | in-process fake client | — | Generate persist, plan-edit writes (`eq user_id`), log/apply `rpc`. No mock library, no local Supabase, no `APIContext` handler suite |
 | e2e | none yet | — | Deliberately out of this rollout (interview Q5: UI looks; cost × signal) |
 | accessibility | none yet | — | Not a top risk in this map |
 | AI-native | none | n/a | No browser MCP this session; vision/UI review excluded by Q5 |
 
-**Test-base profile:** growing — Vitest configured; units for shown-load, log completeness/schema/failure mapping, generate `planId` + error body, generate persist fake client, apply schema + apply failure mapping. IDOR still untested (see §3 Phase 3).
+**Test-base profile:** growing — Vitest configured; units for shown-load, log completeness/schema/failure mapping, generate `planId` + error body, generate persist fake client, apply schema + apply failure mapping, plan-edit ownership fakes, log/apply fake `rpc` lineage, generate/edit request schemas.
 
 **Stack grounding tools (current session):**
 - Docs: Context7 — Astro 6 Vitest/`getViteConfig`/`node` env; Vitest 4 `vitest run` and `.test.ts`; checked: 2026-08-31
@@ -122,23 +122,23 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 - **Location**: next to the helper under `src/lib/progression/` or `src/lib/sessions/`.
 - **Naming**: `<module>.test.ts` (same stem as the module).
-- **Reference tests**: `src/lib/progression/progression-rule.test.ts` (locked-rule oracle), `src/lib/progression/logged-suggestions.test.ts` (coerce + omit), `src/lib/sessions/session-id-from-log-response.test.ts`, `src/lib/sessions/log-session-sets.test.ts`, `src/lib/sessions/session-log-schema.test.ts`, `src/lib/http/error-message-from-body.test.ts`, `src/lib/plans/plan-id-from-generate-response.test.ts`, `src/lib/progression/progression-write-set.test.ts`.
+- **Reference tests**: `src/lib/progression/progression-rule.test.ts` (locked-rule oracle), `src/lib/progression/logged-suggestions.test.ts` (coerce + omit), `src/lib/sessions/session-id-from-log-response.test.ts`, `src/lib/sessions/log-session-sets.test.ts`, `src/lib/sessions/session-log-schema.test.ts`, `src/lib/http/error-message-from-body.test.ts`, `src/lib/plans/plan-id-from-generate-response.test.ts`, `src/lib/plans/plan-generation-schema.test.ts`, `src/lib/plans/plan-edit-schema.test.ts`, `src/lib/progression/progression-write-set.test.ts`.
 - **Run locally**: `npm test`.
 - **Oracle**: archive Phase 1 arithmetic — increase = heaviest + 2.5 kg, deload = heaviest × 0.9. Write expecteds as `100 + 2.5` / `82.5 * 0.9` (or test-file constants with that comment). Never `expect(fn(x)).toEqual(fn(x))`.
 - **Skip vs apply**: Accept all vs Save are `buildAcceptAllLoads` / `buildSaveLoads`. Skip is a link with no POST — do not invent a skip RPC test.
 
 ### 6.2 Adding an integration test
 
-There is still **no** live Supabase, RPC, or `APIContext` handler suite. Persist “integration” in this project means:
+There is still **no** live Supabase, RPC, or `APIContext` handler suite. Persist and ownership “integration” in this project means:
 
-- **Location**: next to the schema or service (`src/lib/sessions/`, `src/lib/services/`).
+- **Location**: next to the schema or service (`src/lib/sessions/`, `src/lib/services/`, `src/lib/plans/`).
 - **Log completeness**: `logSessionSchema` (archive ranges, empty/incomplete/dup keys) + `buildLogSessionSets` (omit/renumber) + `sessionLogFailure` (user-facing 400/404/500 copy). Do not `SELECT session_sets`.
 - **Generate persist**: export `persistGeneratedPlan` and pass an in-process fake `from().insert()/.select().single()` / `delete().eq().eq()` client. Assert throw + compensating delete; do not call OpenRouter.
 - **Apply mapping**: `progressionApplyFailure` status + `{ error }` strings. Schema cases already live in `progression-apply-schema.test.ts`.
+- **Owner isolation**: fake `from().update/delete().eq("user_id")` empty `maybeSingle` → not-found (see `plan-edit.test.ts`). Fake `rpc` returning `{ message: "Not found" }` through `logSession` / `applyProgressionLoads`. Do **not** stub a successful row for a different `user_id`.
+- **Untrusted body beyond log/apply shape**: `generatePlanRequestSchema` and `patchPlanSchema` / `exerciseWriteSchema`. A well-formed foreign UUID still **parses**; attach is the fake `rpc`, not zod.
 - **Run locally**: `npm test`.
-- **Do not**: Playwright, jsdom, a mock framework, or executing Postgres.
-
-Two-identity ownership and invalid POST bodies beyond log/apply zod are §3 Phase 3.
+- **Do not**: Playwright, jsdom, a mock framework, executing Postgres, or mocking RLS to return another user’s row.
 
 ### 6.3 Adding an e2e test
 
@@ -146,7 +146,7 @@ Not in this rollout. Do not add Playwright tours for UI looks (see §7). Do not 
 
 ### 6.4 Adding a test for a new API endpoint
 
-Prefer the **schema**, **failure mapper**, and **write-set / omit builders** over a first handler mock. Apply-shaped POSTs: `applyProgressionSchema` + `progressionApplyFailure`. Log-shaped POSTs: `logSessionSchema` + `sessionLogFailure` + `buildLogSessionSets`. That is not a substitute for ownership 404s — those wait for §3 Phase 3.
+Prefer the **schema**, **failure mapper**, and **write-set / omit builders** over a first handler mock. Apply-shaped POSTs: `applyProgressionSchema` + `progressionApplyFailure` + fake `rpc` for `"Not found"` / `"Invalid loads"`. Log-shaped POSTs: `logSessionSchema` + `sessionLogFailure` + `buildLogSessionSets` + fake `rpc` for `"Not found"` / `"Invalid sets"`. Plan writes: `patchPlanSchema` / `exerciseWriteSchema` + `planEditFailure` + fake `eq("user_id")`. Ownership 404 is that fake, not an `APIContext` handler.
 
 ### 6.5 Adding a test for error visibility on an island
 
@@ -161,6 +161,8 @@ Prefer the **schema**, **failure mapper**, and **write-set / omit builders** ove
 Critical-path coverage (`testing-critical-path-coverage`): shown suggestions omit unlogged and un-coercible lifts — they do **not** invent hold from plan `default_load_kg`. Skip is `<a href="/sessions">` with no apply call. Apply stores client kg; it does not re-run increase/hold/deload.
 
 Persist and error visibility (`testing-persist-and-error-visibility`): incomplete log drafts are omitted client-side; incomplete POST elements fail zod (400), they are not dropped into a 201. Generate persist is two inserts + compensating delete; exercise-insert failure throws. Generate `ok` without `planId` stays with an error.
+
+Owner isolation and untrusted input (`testing-owner-isolation-and-untrusted-input`): empty filtered update/delete is 404, not 200. A well-formed UUID that still parses is **not** attach proof. Do not mock RLS to return another user’s row. Live two-JWT stays archive/manual.
 
 ## 7. What We Deliberately Don't Test
 

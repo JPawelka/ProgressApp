@@ -259,25 +259,25 @@ None.
 
 #### Automated
 
-- [x] 2.1 `logSession` and `applyProgressionLoads` are invoked with a fake `rpc` for not-found and invalid-message cases
-- [x] 2.2 Log and apply schemas include a foreign-UUID-still-parses test
-- [x] 2.3 `npm test` passes
-- [x] 2.4 `npm run lint` passes
+- [x] 2.1 `logSession` and `applyProgressionLoads` are invoked with a fake `rpc` for not-found and invalid-message cases — 776b758
+- [x] 2.2 Log and apply schemas include a foreign-UUID-still-parses test — 776b758
+- [x] 2.3 `npm test` passes — 776b758
+- [x] 2.4 `npm run lint` passes — 776b758
 
 #### Manual
 
-- [x] 2.5 Skim the new schema tests: comments or names make clear parse ≠ attach
+- [x] 2.5 Skim the new schema tests: comments or names make clear parse ≠ attach — 776b758
 
 ### Phase 3: Generate/edit schemas and cookbook
 
 #### Automated
 
-- [ ] 3.1 New generate and edit schema test files exist and cover the cases above
-- [ ] 3.2 `npm test` passes
-- [ ] 3.3 `npm run lint` passes
-- [ ] 3.4 `context/foundation/test-plan.md` §6.2 / §6.4 / §6.6 describe Phase 3 fakes; §2 #3/#7 cheapest-layer cells are backported
+- [x] 3.1 New generate and edit schema test files exist and cover the cases above
+- [x] 3.2 `npm test` passes
+- [x] 3.3 `npm run lint` passes
+- [x] 3.4 `context/foundation/test-plan.md` §6.2 / §6.4 / §6.6 describe Phase 3 fakes; §2 #3/#7 cheapest-layer cells are backported
 
 #### Manual
 
-- [ ] 3.5 Skim cookbook: a new IDOR test would not open Playwright or local Supabase
-- [ ] 3.6 If two accounts are available, follow archive isolation (S-03 PATCH/DELETE 404; S-04 stolen `plan_id` 404) from `context/archive/2026-08-22-edit-plan-exercises/verification.md` and `context/archive/2026-08-29-log-training-session/plan.md` — optional; not a CI gate
+- [x] 3.5 Skim cookbook: a new IDOR test would not open Playwright or local Supabase
+- [x] 3.6 If two accounts are available, follow archive isolation (S-03 PATCH/DELETE 404; S-04 stolen `plan_id` 404) from `context/archive/2026-08-22-edit-plan-exercises/verification.md` and `context/archive/2026-08-29-log-training-session/plan.md` — optional; not a CI gate
