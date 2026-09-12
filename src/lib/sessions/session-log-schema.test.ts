@@ -82,6 +82,13 @@ test("rejects duplicate plan_exercise_id and set_number", () => {
   ).toBe(false);
 });
 
+test("well-formed foreign UUID still parses (shape, not lineage/attach)", () => {
+  const parsed = logSessionSchema.safeParse({
+    sets: [{ plan_exercise_id: benchId, set_number: 1, reps: 8, load_kg: 80 }],
+  });
+  expect(parsed.success).toBe(true);
+});
+
 test("rejects extra keys", () => {
   expect(
     logSessionSchema.safeParse({

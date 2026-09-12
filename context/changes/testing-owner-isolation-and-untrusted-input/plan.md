@@ -246,27 +246,27 @@ None.
 
 #### Automated
 
-- [x] 1.1 `plan-edit.test.ts` covers empty-row 404 paths with captured `user_id` (and `plan_id` on exercise update)
-- [x] 1.2 `planEditFailure` covers 404 / 409 / 500 / null as above
-- [x] 1.3 `npm test` passes
-- [x] 1.4 `npm run lint` passes
+- [x] 1.1 `plan-edit.test.ts` covers empty-row 404 paths with captured `user_id` (and `plan_id` on exercise update) — 329975e
+- [x] 1.2 `planEditFailure` covers 404 / 409 / 500 / null as above — 329975e
+- [x] 1.3 `npm test` passes — 329975e
+- [x] 1.4 `npm run lint` passes — 329975e
 
 #### Manual
 
-- [x] 1.5 Skim the new tests: none of them stub a successful row for a different `user_id` than the caller
+- [x] 1.5 Skim the new tests: none of them stub a successful row for a different `user_id` than the caller — 329975e
 
 ### Phase 2: Log and apply lineage
 
 #### Automated
 
-- [ ] 2.1 `logSession` and `applyProgressionLoads` are invoked with a fake `rpc` for not-found and invalid-message cases
-- [ ] 2.2 Log and apply schemas include a foreign-UUID-still-parses test
-- [ ] 2.3 `npm test` passes
-- [ ] 2.4 `npm run lint` passes
+- [x] 2.1 `logSession` and `applyProgressionLoads` are invoked with a fake `rpc` for not-found and invalid-message cases
+- [x] 2.2 Log and apply schemas include a foreign-UUID-still-parses test
+- [x] 2.3 `npm test` passes
+- [x] 2.4 `npm run lint` passes
 
 #### Manual
 
-- [ ] 2.5 Skim the new schema tests: comments or names make clear parse ≠ attach
+- [x] 2.5 Skim the new schema tests: comments or names make clear parse ≠ attach
 
 ### Phase 3: Generate/edit schemas and cookbook
 

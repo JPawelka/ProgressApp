@@ -39,6 +39,13 @@ test("rejects load_kg outside 0 to 9999.99", () => {
   ).toBe(false);
 });
 
+test("well-formed foreign UUID still parses (shape, not lineage/attach)", () => {
+  const parsed = applyProgressionSchema.safeParse({
+    loads: [{ plan_exercise_id: benchId, load_kg: 80 }],
+  });
+  expect(parsed.success).toBe(true);
+});
+
 test("rejects extra keys", () => {
   expect(
     applyProgressionSchema.safeParse({
