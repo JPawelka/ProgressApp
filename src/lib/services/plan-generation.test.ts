@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { persistGeneratedPlan, PlanPersistError } from "./plan-generation";
+import { persistGeneratedPlan, PlanPersistError, planPersistFailure } from "./plan-generation";
 import type { ValidatedPlanPayload } from "@/lib/plans/plan-generation-schema";
 
 const userId = "user-1";
@@ -110,4 +110,12 @@ test("failed compensating delete still throws PlanPersistError", async () => {
   });
 
   await expect(persistGeneratedPlan(client, userId, "strength", payload)).rejects.toBeInstanceOf(PlanPersistError);
+});
+
+test("maps persist to 500 Failed to generate plan without leaking RPC text", () => {
+  expect(planPersistFailure(new PlanPersistError("duplicate key"))).toEqual({
+    error: "Failed to generate plan",
+    status: 500,
+  });
+  expect(planPersistFailure(new Error("boom"))).toBeNull();
 });

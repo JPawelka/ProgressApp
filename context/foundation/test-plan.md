@@ -73,7 +73,7 @@ orchestrator updates Status as artifacts appear on disk.
 |---|---|---|---|---|---|---|
 | 1 | Critical-path coverage | Prove suggestion appears after log; skip/accept/save match the contract; loads obey the locked rule | #1, #5, #6 | unit + integration | complete | testing-critical-path-coverage |
 | 2 | Persist and error visibility | Prove plan/session saves are real and generate/log/apply failures are visible | #2, #4 | integration + island tests | complete | testing-persist-and-error-visibility |
-| 3 | Owner isolation and untrusted input | Prove cross-user id is 401/404 with no write, and invalid bodies are rejected | #3, #7 | integration | change opened | testing-owner-isolation-and-untrusted-input |
+| 3 | Owner isolation and untrusted input | Prove cross-user id is 401/404 with no write, and invalid bodies are rejected | #3, #7 | integration | complete | testing-owner-isolation-and-untrusted-input |
 
 ## 4. Stack
 

@@ -112,6 +112,14 @@ export async function persistGeneratedPlan(
   return planId;
 }
 
+export function planPersistFailure(error: unknown): { error: string; status: number } | null {
+  if (error instanceof PlanPersistError) {
+    console.error("Plan persist failed", error.message);
+    return { error: "Failed to generate plan", status: 500 };
+  }
+  return null;
+}
+
 /**
  * Generate via OpenRouter, validate, then insert plan + exercises.
  * On exercise insert failure, deletes the plan row (no partial save).

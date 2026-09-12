@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase";
 import { isPlanGenerationAvailable } from "@/lib/plans/plan-generation-config";
 import { OpenRouterError } from "@/lib/plans/openrouter";
 import { formatGeneratePlanRequestError, generatePlanRequestSchema } from "@/lib/plans/plan-generation-schema";
-import { generateAndPersistPlan, PlanGenerationError, PlanPersistError } from "@/lib/services/plan-generation";
+import { generateAndPersistPlan, PlanGenerationError, planPersistFailure } from "@/lib/services/plan-generation";
 
 export const prerender = false;
 
@@ -60,8 +60,9 @@ export const POST: APIRoute = async (context) => {
     if (error instanceof PlanGenerationError || error instanceof OpenRouterError) {
       return json({ error: error.message }, 502);
     }
-    if (error instanceof PlanPersistError) {
-      return json({ error: error.message }, 500);
+    const persist = planPersistFailure(error);
+    if (persist) {
+      return json({ error: persist.error }, persist.status);
     }
     return json({ error: "Failed to generate plan" }, 500);
   }

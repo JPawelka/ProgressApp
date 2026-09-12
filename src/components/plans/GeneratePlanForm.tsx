@@ -27,9 +27,23 @@ export default function GeneratePlanForm() {
         body: JSON.stringify({ goal }),
       });
 
-      const data: unknown = await response.json();
       if (!response.ok) {
+        let data: unknown;
+        try {
+          data = await response.json();
+        } catch {
+          setError("Failed to generate plan");
+          return;
+        }
         setError(errorMessageFromBody(data, "Failed to generate plan"));
+        return;
+      }
+
+      let data: unknown;
+      try {
+        data = await response.json();
+      } catch {
+        setError("Plan generated but the plan page could not be opened");
         return;
       }
 
