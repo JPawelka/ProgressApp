@@ -58,7 +58,7 @@ interface RowResult<T> {
   error: { message: string } | null;
 }
 
-async function persistGeneratedPlan(
+export async function persistGeneratedPlan(
   supabase: SupabaseClient,
   userId: string,
   goal: TrainingGoal,

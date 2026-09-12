@@ -289,23 +289,23 @@ None.
 
 #### Automated
 
-- [x] 2.1 `GeneratePlanForm` does not navigate when `planId` is missing; it sets an error string
-- [x] 2.2 `npm test` includes error-body and `planId` parse cases
-- [x] 2.3 `npm run lint` passes
+- [x] 2.1 `GeneratePlanForm` does not navigate when `planId` is missing; it sets an error string — 149139f
+- [x] 2.2 `npm test` includes error-body and `planId` parse cases — 149139f
+- [x] 2.3 `npm run lint` passes — 149139f
 
 #### Manual
 
-- [x] 2.4 Trigger a failed generate or log (e.g. invalid/offline): the form stays on the page and shows a red `ServerError` message, not a blank form that looks saved
+- [x] 2.4 Trigger a failed generate or log (e.g. invalid/offline): the form stays on the page and shows a red `ServerError` message, not a blank form that looks saved — 149139f
 
 ### Phase 3: Generate persist, apply mapping, cookbook
 
 #### Automated
 
-- [ ] 3.1 `persistGeneratedPlan` is exported and covered by the fake-client cases
-- [ ] 3.2 `npm test` still passes
-- [ ] 3.3 `npm run lint` passes
-- [ ] 3.4 `context/foundation/test-plan.md` §6.2 and §6.5 are no longer TBD
+- [x] 3.1 `persistGeneratedPlan` is exported and covered by the fake-client cases
+- [x] 3.2 `npm test` still passes
+- [x] 3.3 `npm run lint` passes
+- [x] 3.4 `context/foundation/test-plan.md` §6.2 and §6.5 are no longer TBD
 
 #### Manual
 
-- [ ] 3.5 Skim §6.2 / §6.5: a new persist or error-visibility test would not open Playwright or jsdom
+- [x] 3.5 Skim §6.2 / §6.5: a new persist or error-visibility test would not open Playwright or jsdom
