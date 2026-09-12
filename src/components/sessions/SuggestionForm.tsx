@@ -98,8 +98,11 @@ export default function SuggestionForm({ sessionId, suggestions }: SuggestionFor
               <span className="text-sm text-purple-200">{DECISION_LABEL[row.decision]}</span>
             </div>
             <div>
-              <label className="mb-1 block text-xs text-blue-100/60">Suggested load (kg)</label>
+              <label htmlFor={`suggested-load-${row.plan_exercise_id}`} className="mb-1 block text-xs text-blue-100/60">
+                Suggested load (kg)
+              </label>
               <input
+                id={`suggested-load-${row.plan_exercise_id}`}
                 type="text"
                 inputMode="decimal"
                 value={loads[row.plan_exercise_id] ?? ""}

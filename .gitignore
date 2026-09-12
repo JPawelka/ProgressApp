@@ -29,3 +29,18 @@ pnpm-debug.log*
 
 # supabase local runtime (also in supabase/.gitignore; root entry for ESLint)
 supabase/.temp/
+
+# stryker
+.stryker-tmp/
+reports/mutation/
+
+# playwright session cookies from storageState
+playwright/.auth/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+.playwright-cli/

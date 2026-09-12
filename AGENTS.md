@@ -15,7 +15,8 @@ ProgressApp is an Astro 6 SSR app (React 19 islands, Tailwind 4, Supabase auth) 
 ## Build, Test, and Development Commands
 
 - `npm run dev` — Cloudflare workerd SSR
-- `npm test` — Vitest unit tests (`vitest run`); no e2e runner yet. Also runs in the pre-commit hook; a failing run aborts the commit.
+- `npm test` — Vitest unit tests (`vitest run`). Also runs in the pre-commit hook; a failing run aborts the commit.
+- `npm run test:e2e` — Playwright (`playwright test`). Auth via `storageState` from `tests/auth.setup.ts` (`E2E_EMAIL` / `E2E_PASSWORD`). Not part of the pre-commit hook.
 - `npm run lint` / `npm run build` — type-checked ESLint; production build (needs Supabase env)
 - Use Node `22.14.0` (@.nvmrc). Scripts live in @package.json.
 
@@ -29,6 +30,20 @@ ProgressApp is an Astro 6 SSR app (React 19 islands, Tailwind 4, Supabase auth) 
 - Import with `@/*` → `src/*` (@tsconfig.json).
 - Prefer Astro for static content; React only when interactivity is required. Add shadcn pieces with `npx shadcn@latest add <name>` into `src/components/ui/` ("new-york").
 - Husky pre-commit: lint-staged (eslint on `*.{ts,tsx,astro}`, prettier on `*.{json,css,md}`) then **`npm test`**. A failing test run blocks the commit.
+
+## E2E Testing Rules
+
+- Use getByRole, getByLabel, getByText as primary locators.
+  Fall back to getByTestId only when accessibility attributes are ambiguous.
+- Never use CSS selectors, XPath, or DOM structure for locating elements.
+- Each test must be independently runnable — no shared state between tests.
+- Never use page.waitForTimeout(). Wait for specific conditions:
+  toBeVisible(), waitForURL(), waitForResponse().
+- Assert the business outcome, not implementation details.
+- Use unique identifiers (e.g., timestamp suffix) for test data
+  to avoid collisions in parallel runs. Clean up in afterEach.
+- Use storageState for authentication — never log in through UI
+  in individual tests.
 
 ## Commit & Pull Request Guidelines
 
