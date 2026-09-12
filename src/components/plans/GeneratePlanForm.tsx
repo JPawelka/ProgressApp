@@ -3,6 +3,8 @@ import { Loader2, Sparkles } from "lucide-react";
 import { ServerError } from "@/components/auth/ServerError";
 import { Button } from "@/components/ui/button";
 import { GOAL_LABELS } from "@/lib/plans/display";
+import { planIdFromGenerateResponse } from "@/lib/plans/plan-id-from-generate-response";
+import { errorMessageFromBody } from "@/lib/http/error-message-from-body";
 import { cn } from "@/lib/utils";
 import type { TrainingGoal } from "@/types";
 
@@ -25,15 +27,19 @@ export default function GeneratePlanForm() {
         body: JSON.stringify({ goal }),
       });
 
-      const data = (await response.json()) as { planId?: string; error?: string };
+      const data: unknown = await response.json();
       if (!response.ok) {
-        setError(data.error ?? "Failed to generate plan");
+        setError(errorMessageFromBody(data, "Failed to generate plan"));
         return;
       }
 
-      if (data.planId) {
-        window.location.href = `/plans/${data.planId}`;
+      const planId = planIdFromGenerateResponse(data);
+      if (!planId) {
+        setError("Plan generated but the plan page could not be opened");
+        return;
       }
+
+      window.location.href = `/plans/${planId}`;
     } catch {
       setError("Failed to generate plan");
     } finally {

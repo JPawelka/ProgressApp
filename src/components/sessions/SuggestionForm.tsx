@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { ServerError } from "@/components/auth/ServerError";
 import { Button } from "@/components/ui/button";
+import { errorMessageFromBody } from "@/lib/http/error-message-from-body";
 import { cn } from "@/lib/utils";
 import { buildAcceptAllLoads, buildSaveLoads } from "@/lib/progression/progression-write-set";
 import type { ProgressionDecision, ProgressionSuggestion } from "@/lib/progression/progression-rule";
@@ -25,8 +26,8 @@ interface SuggestionFormProps {
 
 async function readError(response: Response): Promise<string> {
   try {
-    const data = (await response.json()) as { error?: string };
-    return data.error ?? "Request failed";
+    const data: unknown = await response.json();
+    return errorMessageFromBody(data, "Request failed");
   } catch {
     return "Request failed";
   }

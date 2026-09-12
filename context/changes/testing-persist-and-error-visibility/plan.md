@@ -277,25 +277,25 @@ None.
 
 #### Automated
 
-- [x] 1.1 `src/lib/sessions/log-session-sets.ts` is used by `LogSessionForm` (no leftover private `isCompleteSet` that diverges from the helper)
-- [x] 1.2 `npm test` covers the schema, mapper, and omit/renumber cases above
-- [x] 1.3 `npm run lint` passes
+- [x] 1.1 `src/lib/sessions/log-session-sets.ts` is used by `LogSessionForm` (no leftover private `isCompleteSet` that diverges from the helper) — 2462d90
+- [x] 1.2 `npm test` covers the schema, mapper, and omit/renumber cases above — 2462d90
+- [x] 1.3 `npm run lint` passes — 2462d90
 
 #### Manual
 
-- [x] 1.4 Log a session with one complete lift and one left blank: save succeeds and only the complete lift appears on the suggestion screen (existing north-star UI)
+- [x] 1.4 Log a session with one complete lift and one left blank: save succeeds and only the complete lift appears on the suggestion screen (existing north-star UI) — 2462d90
 
 ### Phase 2: Error visibility
 
 #### Automated
 
-- [ ] 2.1 `GeneratePlanForm` does not navigate when `planId` is missing; it sets an error string
-- [ ] 2.2 `npm test` includes error-body and `planId` parse cases
-- [ ] 2.3 `npm run lint` passes
+- [x] 2.1 `GeneratePlanForm` does not navigate when `planId` is missing; it sets an error string
+- [x] 2.2 `npm test` includes error-body and `planId` parse cases
+- [x] 2.3 `npm run lint` passes
 
 #### Manual
 
-- [ ] 2.4 Trigger a failed generate or log (e.g. invalid/offline): the form stays on the page and shows a red `ServerError` message, not a blank form that looks saved
+- [x] 2.4 Trigger a failed generate or log (e.g. invalid/offline): the form stays on the page and shows a red `ServerError` message, not a blank form that looks saved
 
 ### Phase 3: Generate persist, apply mapping, cookbook
 

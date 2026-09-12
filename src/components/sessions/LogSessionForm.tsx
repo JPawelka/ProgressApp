@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { planDisplayName } from "@/lib/plans/display";
 import { sessionIdFromLogResponse } from "@/lib/sessions/session-id-from-log-response";
 import { buildLogSessionSets, MAX_SETS_PER_EXERCISE } from "@/lib/sessions/log-session-sets";
+import { errorMessageFromBody } from "@/lib/http/error-message-from-body";
 import { cn } from "@/lib/utils";
 import type { Plan, PlanExercise } from "@/types";
 
@@ -49,8 +50,8 @@ function initialRows(exercise: PlanExercise): SetDraft[] {
 
 async function readError(response: Response): Promise<string> {
   try {
-    const data = (await response.json()) as { error?: string };
-    return data.error ?? "Request failed";
+    const data: unknown = await response.json();
+    return errorMessageFromBody(data, "Request failed");
   } catch {
     return "Request failed";
   }
