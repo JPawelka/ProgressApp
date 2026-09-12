@@ -4,11 +4,11 @@ import { ServerError } from "@/components/auth/ServerError";
 import { Button } from "@/components/ui/button";
 import { planDisplayName } from "@/lib/plans/display";
 import { sessionIdFromLogResponse } from "@/lib/sessions/session-id-from-log-response";
+import { buildLogSessionSets, MAX_SETS_PER_EXERCISE } from "@/lib/sessions/log-session-sets";
 import { cn } from "@/lib/utils";
 import type { Plan, PlanExercise } from "@/types";
 
 const START_SETS = 3;
-const MAX_SETS = 8;
 
 const inputClass = cn(
   "w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white",
@@ -47,41 +47,6 @@ function initialRows(exercise: PlanExercise): SetDraft[] {
   return Array.from({ length: START_SETS }, () => defaultDraft(exercise));
 }
 
-function parseReps(value: string | number): number | null {
-  const trimmed = fieldText(value).trim();
-  if (trimmed === "") {
-    return null;
-  }
-  const parsed = Number(trimmed);
-  if (!Number.isInteger(parsed)) {
-    return Number.NaN;
-  }
-  return parsed;
-}
-
-function parseLoad(value: string | number): number | null {
-  const trimmed = fieldText(value).trim();
-  if (trimmed === "") {
-    return null;
-  }
-  return Number(trimmed);
-}
-
-function isCompleteSet(draft: SetDraft): { reps: number; load_kg: number } | null {
-  const reps = parseReps(draft.reps);
-  const load = parseLoad(draft.load);
-  if (reps === null || load === null) {
-    return null;
-  }
-  if (!Number.isInteger(reps) || reps < 1 || reps > 100) {
-    return null;
-  }
-  if (!Number.isFinite(load) || load < 0 || load > 9999.99) {
-    return null;
-  }
-  return { reps, load_kg: load };
-}
-
 async function readError(response: Response): Promise<string> {
   try {
     const data = (await response.json()) as { error?: string };
@@ -115,7 +80,7 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
     }
     setRows((current) => {
       const list = current[exerciseId] ?? [];
-      if (list.length >= MAX_SETS) {
+      if (list.length >= MAX_SETS_PER_EXERCISE) {
         return current;
       }
       return { ...current, [exerciseId]: [...list, defaultDraft(exercise)] };
@@ -124,32 +89,9 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
 
   async function save() {
     setError(null);
-    const sets: { plan_exercise_id: string; set_number: number; reps: number; load_kg: number }[] = [];
-
-    for (const exercise of exercises) {
-      const list = rows[exercise.id] ?? [];
-      let setNumber = 1;
-      for (const draft of list) {
-        const complete = isCompleteSet(draft);
-        if (!complete) {
-          continue;
-        }
-        if (setNumber > MAX_SETS) {
-          setError("Each exercise can have at most 8 sets");
-          return;
-        }
-        sets.push({
-          plan_exercise_id: exercise.id,
-          set_number: setNumber,
-          reps: complete.reps,
-          load_kg: complete.load_kg,
-        });
-        setNumber += 1;
-      }
-    }
-
-    if (sets.length === 0) {
-      setError("Log at least one complete set (reps and load)");
+    const built = buildLogSessionSets(exercises, rows);
+    if (!built.ok) {
+      setError(built.error);
       return;
     }
 
@@ -158,7 +100,7 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
       const response = await fetch(`/api/plans/${plan.id}/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sets }),
+        body: JSON.stringify({ sets: built.sets }),
       });
       if (!response.ok) {
         setError(await readError(response));
@@ -195,7 +137,7 @@ export default function LogSessionForm({ plan, exercises }: LogSessionFormProps)
 
       {exercises.map((exercise) => {
         const list = rows[exercise.id] ?? [];
-        const canAdd = list.length < MAX_SETS;
+        const canAdd = list.length < MAX_SETS_PER_EXERCISE;
         return (
           <section
             key={exercise.id}
