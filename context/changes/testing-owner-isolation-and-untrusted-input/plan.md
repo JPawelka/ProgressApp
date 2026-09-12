@@ -280,4 +280,4 @@ None.
 #### Manual
 
 - [x] 3.5 Skim cookbook: a new IDOR test would not open Playwright or local Supabase — 32e555d
-- [x] 3.6 If two accounts are available, follow archive isolation (S-03 PATCH/DELETE 404; S-04 stolen `plan_id` 404) from `context/archive/2026-08-22-edit-plan-exercises/verification.md` and `context/archive/2026-08-29-log-training-session/plan.md` — optional; not a CI gate — 32e555d (skipped: no two accounts)
+- [x] 3.6 If two accounts are available, follow archive isolation (S-03 PATCH/DELETE 404; S-04 stolen `plan_id` 404) from `context/archive/2026-08-22-edit-plan-exercises/verification.md` and `context/archive/2026-08-29-log-training-session/plan.md` — optional; not a CI gate (skipped: no two accounts) — 32e555d
