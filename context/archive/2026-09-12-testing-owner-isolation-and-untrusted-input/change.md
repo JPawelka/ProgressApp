@@ -1,10 +1,10 @@
 ---
 change_id: testing-owner-isolation-and-untrusted-input
 title: Owner isolation and untrusted-input tests (rollout Phase 3)
-status: impl_reviewed
+status: archived
 created: 2026-09-12
 updated: 2026-09-12
-archived_at: null
+archived_at: 2026-09-12T18:30:00Z
 ---
 
 ## Notes
