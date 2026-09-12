@@ -1,7 +1,7 @@
 ---
 change_id: testing-persist-and-error-visibility
 title: Persist completeness and generate/log/apply error visibility
-status: implementing
+status: implemented
 created: 2026-09-12
 updated: 2026-09-12
 archived_at: null

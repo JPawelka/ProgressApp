@@ -301,11 +301,11 @@ None.
 
 #### Automated
 
-- [x] 3.1 `persistGeneratedPlan` is exported and covered by the fake-client cases
-- [x] 3.2 `npm test` still passes
-- [x] 3.3 `npm run lint` passes
-- [x] 3.4 `context/foundation/test-plan.md` §6.2 and §6.5 are no longer TBD
+- [x] 3.1 `persistGeneratedPlan` is exported and covered by the fake-client cases — e630043
+- [x] 3.2 `npm test` still passes — e630043
+- [x] 3.3 `npm run lint` passes — e630043
+- [x] 3.4 `context/foundation/test-plan.md` §6.2 and §6.5 are no longer TBD — e630043
 
 #### Manual
 
-- [x] 3.5 Skim §6.2 / §6.5: a new persist or error-visibility test would not open Playwright or jsdom
+- [x] 3.5 Skim §6.2 / §6.5: a new persist or error-visibility test would not open Playwright or jsdom — e630043
