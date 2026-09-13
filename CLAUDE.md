@@ -52,4 +52,4 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 
 ## CI
 
-GitHub Actions workflow (`.github/workflows/ci.yml`) runs lint + test + build on every push and PR to master. Requires `SUPABASE_URL` and `SUPABASE_KEY` repository secrets for the build step.
+GitHub Actions workflow (`.github/workflows/ci.yml`) runs lint + Vitest + build, then Playwright, on every push and PR to `main`. Requires repository secrets `SUPABASE_URL`, `SUPABASE_KEY`, `E2E_EMAIL`, and `E2E_PASSWORD`.

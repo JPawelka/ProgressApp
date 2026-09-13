@@ -198,7 +198,19 @@ Worker dashboard name must stay `progressapp` (matches `wrangler.jsonc`).
 
 ## CI
 
-GitHub Actions runs **lint + build only** on every push and PR to `main` (no deploy step). Configure repository secrets `SUPABASE_URL` and `SUPABASE_KEY` for the build.
+GitHub Actions (`.github/workflows/ci.yml`) on every push and PR to `main`:
+
+1. lint + Vitest + production build
+2. Playwright (user-facing flow: log a session → next-session suggestion)
+
+No deploy step — production auto-deploy is Cloudflare Workers Builds.
+
+Repository secrets:
+
+| Secret | Used by |
+| --- | --- |
+| `SUPABASE_URL`, `SUPABASE_KEY` | build + e2e (`npm run dev` via `.dev.vars`) |
+| `E2E_EMAIL`, `E2E_PASSWORD` | Playwright `storageState` login (`tests/auth.setup.ts`) |
 
 ## License
 

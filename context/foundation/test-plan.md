@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-09-12
+> Last updated: 2026-09-13
 
 ## 1. Strategy
 
@@ -86,7 +86,7 @@ plus the MCP/tools actually exposed in the current session.
 |---|---|---|---|
 | unit + integration | Vitest via Astro `getViteConfig` | ^4.1.11 | `environment: node` (Astro 6); `npm test` = `vitest run`; pre-commit + CI already run it. Helpers under `src/lib/progression/`, `src/lib/sessions/`, `src/lib/http/`, `src/lib/plans/`, `src/lib/services/` |
 | API mocking | in-process fake client | — | Generate persist, plan-edit writes (`eq user_id`), log/apply `rpc`. No mock library, no local Supabase, no `APIContext` handler suite |
-| e2e | none yet | — | Deliberately out of this rollout (interview Q5: UI looks; cost × signal) |
+| e2e | Playwright (`npm run test:e2e`) | ^1.63.0 | User-facing north-star: `tests/e2e/suggestion-after-successful-log.spec.ts`. Auth via `tests/auth.setup.ts` + `E2E_EMAIL` / `E2E_PASSWORD`. CI job `e2e` after lint/test/build. Not in the pre-commit hook. |
 | accessibility | none yet | — | Not a top risk in this map |
 | AI-native | none | n/a | No browser MCP this session; vision/UI review excluded by Q5 |
 
@@ -109,8 +109,9 @@ phase lands; before that, the gate is `planned`.
 | lint + typecheck | local + CI | required | syntactic / type drift |
 | unit + integration (`npm test`) | local (husky) + CI | required; suite content grows with §3 Phases 1–3 | logic regressions on risks #1–#7 as those phases land |
 | production build | CI | required | SSR/Worker compile + env wiring for the build |
+| Playwright e2e | CI (`e2e` job) | required | user can log a session and see increase/hold/deload |
 
-No e2e, visual-diff, or post-edit-hook gates in this rollout (no named phase owns them; interview Q5).
+Visual-diff and post-edit-hook gates are still out of scope (interview Q5: UI looks).
 
 ## 6. Cookbook Patterns
 
@@ -142,7 +143,12 @@ There is still **no** live Supabase, RPC, or `APIContext` handler suite. Persist
 
 ### 6.3 Adding an e2e test
 
-Not in this rollout. Do not add Playwright tours for UI looks (see §7). Do not e2e the gym log→suggestion loop; the 201 `{ session.id }` contract is a unit helper.
+- **Location**: `tests/e2e/<risk-slug>.spec.ts`
+- **Auth**: `storageState` from `tests/auth.setup.ts` — never sign in inside the spec
+- **Locators**: getByRole / getByLabel / getByText (see AGENTS.md E2E rules)
+- **Reference**: `tests/e2e/suggestion-after-successful-log.spec.ts` (risk #1)
+- **Run locally**: `npm run test:e2e` (needs `.env` `E2E_EMAIL` / `E2E_PASSWORD` and `.dev.vars` for `npm run dev`)
+- **Do not**: CSS/XPath locators, `page.waitForTimeout()`, or visual tours of UI looks (§7)
 
 ### 6.4 Adding a test for a new API endpoint
 
@@ -176,7 +182,7 @@ contributors should respect these unless the underlying assumption changes.
 
 ## 8. Freshness Ledger
 
-- Strategy (§1–§5) last reviewed: 2026-08-31
+- Strategy (§1–§5) last reviewed: 2026-09-13
 - Stack versions last verified: 2026-08-31
 - AI-native tool references last verified: 2026-08-31 (none recommended)
 
