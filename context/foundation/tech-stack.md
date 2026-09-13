@@ -31,6 +31,8 @@ is Astro + React + Supabase + Cloudflare: TypeScript end-to-end, Postgres and
 auth out of the box, and edge deploy on Cloudflare Workers (Workers + Static
 Assets). Auth and AI flags
 are set from the PRD; payments, realtime, and background jobs are out of scope.
-AI plan generation is wired after scaffolding via an LLM SDK — not bundled in
-the starter. CI is GitHub Actions (lint + build only); production deploy is
+AI plan generation is **Google Gemini** (`gemini-3.6-flash`) via native `fetch` in
+`src/lib/plans/gemini.ts` (no LLM SDK). Server secret: `GEMINI_API_KEY`
+(`.dev.vars` locally, `wrangler secret put` in production).
+CI is GitHub Actions (lint + Vitest + build + Playwright); production deploy is
 Cloudflare Workers Builds on merge to `main`.

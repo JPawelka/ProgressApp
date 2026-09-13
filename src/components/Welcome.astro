@@ -1,9 +1,10 @@
 ---
 import Topbar from "@/components/Topbar.astro";
+
+const { user } = Astro.locals;
 ---
 
 <div class="bg-cosmic relative min-h-screen w-full overflow-hidden">
-  <!-- Cosmic orbs -->
   <div
     class="pointer-events-none absolute top-1/4 -left-24 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[120px]"
   >
@@ -17,7 +18,6 @@ import Topbar from "@/components/Topbar.astro";
   >
   </div>
 
-  <!-- Star field -->
   <div
     class="pointer-events-none absolute inset-0"
     style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 200px 200px, 150px 150px, 100px 100px; background-position: 0 0, 40px 60px, 80px 30px;"
@@ -27,33 +27,53 @@ import Topbar from "@/components/Topbar.astro";
   <div class="relative z-10 p-4 sm:p-8">
     <Topbar />
 
-    <!-- Hero section -->
     <div class="mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-24 text-center sm:py-32 lg:py-40">
       <h1
         class="mb-6 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-5xl leading-tight font-bold text-transparent sm:text-6xl lg:text-7xl"
       >
-        10x Astro Starter
+        ProgressApp
       </h1>
       <p class="mb-10 max-w-2xl text-lg text-blue-100/70 sm:text-xl">
-        A production-ready starter with authentication, modern tooling, and a cosmic developer experience.
+        Log the session you just trained. Get a next-load suggestion — increase, hold, or deload — grounded in your own
+        sets, not a blank logbook.
       </p>
       <div class="flex flex-col gap-4 sm:flex-row">
-        <a
-          href="/auth/signin"
-          class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
-        >
-          Sign In
-        </a>
-        <a
-          href="/auth/signup"
-          class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
-        >
-          Sign Up
-        </a>
+        {
+          user ? (
+            <>
+              <a
+                href="/plans"
+                class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
+              >
+                Open plans
+              </a>
+              <a
+                href="/sessions"
+                class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
+              >
+                Session history
+              </a>
+            </>
+          ) : (
+            <>
+              <a
+                href="/auth/signup"
+                class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
+              >
+                Create account
+              </a>
+              <a
+                href="/auth/signin"
+                class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
+              >
+                Sign in
+              </a>
+            </>
+          )
+        }
       </div>
     </div>
 
-    <!-- Feature cards -->
     <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 pb-24 sm:grid-cols-3">
       <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
         <svg
@@ -68,12 +88,12 @@ import Topbar from "@/components/Topbar.astro";
           stroke-linejoin="round"
           class="mb-4 text-purple-300"
         >
-          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          <path d="M12 20h9"></path>
+          <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Authentication Ready</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Plan from a goal</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          Built-in Supabase auth with sign in, sign up, and protected routes out of the box.
+          Generate a training plan for mass, strength, or endurance, then edit lifts and loads to match your gym.
         </p>
       </div>
 
@@ -90,13 +110,13 @@ import Topbar from "@/components/Topbar.astro";
           stroke-linejoin="round"
           class="mb-4 text-purple-300"
         >
-          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-          <polyline points="2 17 12 22 22 17"></polyline>
-          <polyline points="2 12 12 17 22 12"></polyline>
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Modern Stack</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Log the session</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          Astro 5, React 19, Tailwind 4, and TypeScript — the latest tools, ready to go.
+          Record sets, reps, and kilograms. History stays private to your account.
         </p>
       </div>
 
@@ -113,12 +133,12 @@ import Topbar from "@/components/Topbar.astro";
           stroke-linejoin="round"
           class="mb-4 text-purple-300"
         >
-          <polyline points="16 18 22 12 16 6"></polyline>
-          <polyline points="8 6 2 12 8 18"></polyline>
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+          <polyline points="16 7 22 7 22 13"></polyline>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Developer Experience</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Know what next</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          ESLint, Prettier, and pre-commit hooks keep your codebase clean from day one.
+          After you save a workout, accept or override an increase, hold, or deload for the next session.
         </p>
       </div>
     </div>

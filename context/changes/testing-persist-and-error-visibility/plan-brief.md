@@ -30,7 +30,7 @@ Incomplete log drafts are omitted; incomplete POST bodies fail zod. Failed persi
 
 **In scope:** Log completeness helpers/tests; error/success parsers; generate stay-with-error; export `persistGeneratedPlan` + fake-client tests; apply failure mapper; test-plan cookbook.
 
-**Out of scope:** Playwright/jsdom; live RPC/SELECT; IDOR; plan-edit races; OpenRouter; apply schema redo; POST handler `APIContext` suite.
+**Out of scope:** Playwright/jsdom; live RPC/SELECT; IDOR; plan-edit races; Gemini; apply schema redo; POST handler `APIContext` suite.
 
 ## Architecture / Approach
 

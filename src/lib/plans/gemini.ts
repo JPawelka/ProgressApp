@@ -2,7 +2,8 @@ import { GEMINI_API_KEY } from "astro:env/server";
 import type { TrainingGoal } from "@/types";
 import { geminiPlanResponseSchema } from "@/lib/plans/plan-generation-schema";
 
-const GEMINI_MODEL = "gemini-2.5-flash";
+/** Current free-tier flash model; Google 404s older ids for new API keys. */
+const GEMINI_MODEL = "gemini-3.6-flash";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 const REQUEST_TIMEOUT_MS = 45_000;

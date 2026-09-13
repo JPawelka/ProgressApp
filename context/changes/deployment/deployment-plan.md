@@ -25,7 +25,7 @@ Mark phase headers the same way when useful (e.g. `## Phase 0 — Prerequisites 
 
 ## Out of scope
 
-- Implementing OpenRouter / AI features
+- Re-implementing plan generation (Gemini is already live)
 - Multi-region HA / DR
 - Migrating off Workers to Vercel/Netlify
 - Adding GHA-based deploy
@@ -224,7 +224,7 @@ npm run dev
 
 Assumes Phase **0C** (Supabase CLI / project) is done. Production must use a **hosted** project even if local Docker was used for day-to-day auth.
 
-**Status:** Hosted project + local/CI keys done. Live Worker URL: `https://progressapp.julpawcio.workers.dev`. **You still need to paste that hostname into Supabase Auth URL config** (API cannot set it with the anon key). OpenRouter deferred until AI work.
+**Status:** Hosted project + local/CI keys done. Live Worker URL: `https://progressapp.julpawcio.workers.dev`. **You still need to paste that hostname into Supabase Auth URL config** (API cannot set it with the anon key). Gemini is the live plan-generation provider (`GEMINI_API_KEY`).
 
 ### Supabase (required now) [~]
 
@@ -353,7 +353,7 @@ Use when something fails. Check the matching box once resolved (or leave `[!]` w
 
 - [ ] Enable **Workers Paid**
 - [ ] Check Observability CPU metrics
-- [ ] Shorten heavy request paths (especially future OpenRouter calls)
+- [ ] Shorten heavy request paths (especially Gemini plan generation)
 
 ### 4. Pages vs Workers confusion
 
@@ -421,7 +421,7 @@ Use when something fails. Check the matching box once resolved (or leave `[!]` w
 | 0C — Supabase CLI & project | `[x]` | Hosted + env + GHA secrets; Option A skipped; optional link / email-confirm-off |
 | 0D — Sanity check | `[x]` | Dev + auth smoke OK; optional `wrangler deploy` later |
 | 1 — Align config | `[x]` | Worker renamed to `progressapp`; astro config confirmed; Worker registered on Phase 3 deploy |
-| 2 — External integrations | `[~]` | Live URL known; **manual** Supabase Site URL/redirects still needed; OpenRouter deferred |
+| 2 — External integrations | `[~]` | Live URL known; **manual** Supabase Site URL/redirects still needed; Gemini configured |
 | 3 — Manual first deploy | `[x]` | https://progressapp.julpawcio.workers.dev — smoke OK |
 | 4 — Workers Builds auto-deploy | `[~]` | CI→`main`; Connect GitHub app in CF dashboard still required |
 | 5 — Hardening & docs | `[~]` | Docs aligned; Access / Paid / custom domain optional later |

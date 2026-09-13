@@ -29,7 +29,7 @@ Incomplete log drafts never appear in the POST `sets` array; empty complete-set 
 - Risks #1, #3, #5, #6, #7; IDOR; untrusted-input beyond log zod already in this slice
 - Plan-edit cardinality / count-then-mutate races
 - Re-testing `applyProgressionSchema` (already covered)
-- OpenRouter / mock-plan payload tours
+- Gemini / mock-plan payload tours
 - Making apply SQL re-run the progression rule
 - Snapshotting generate’s current silent settle as success
 - Exporting private `throwFromRpcMessage` names — test exported `*Failure` + error classes
@@ -46,7 +46,7 @@ Follow Phase 1: extract pure modules under `src/lib/`, wire islands, keep Vitest
 
 **Fake Supabase client.** In-process object that implements the `from().insert().select().single()` / `from().insert()` / `from().delete().eq().eq()` chain `persistGeneratedPlan` actually calls. No extra mock library. Assert delete is invoked on exercise-insert error; still throw `PlanPersistError` if delete itself fails (orphan is failure-visible, not 200).
 
-**Export for test.** Export `persistGeneratedPlan` from `plan-generation.ts` so the fake client does not go through OpenRouter.
+**Export for test.** Export `persistGeneratedPlan` from `plan-generation.ts` so the fake client does not go through Gemini.
 
 ---
 
@@ -188,7 +188,7 @@ Prove generate persist failure is not a 200, and that compensating delete is att
 
 **Edge:** Delete also fails → still throw `PlanPersistError` (not success).
 
-**Anti-pattern avoided:** OpenRouter; Postgres engine; re-testing apply zod; file:line in §2.
+**Anti-pattern avoided:** Gemini; Postgres engine; re-testing apply zod; file:line in §2.
 
 ### Changes Required:
 

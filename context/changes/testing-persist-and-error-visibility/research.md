@@ -51,7 +51,7 @@ Phase 2 failures are **not one persist bug**. Session log, plan generate, and ap
 | Risk | Cheapest useful layer | Do not |
 |------|------------------------|--------|
 | #2 session | Unit: `logSessionSchema` (empty, incomplete element, dup keys); `sessionLogFailure` mapping; extract/test log payload builder (omit + renumber). SQL read of RPC: no skip-filter, returns `sessions` only | Live `SELECT session_sets`; claiming 201 means all UI rows saved; “all exercises must be logged” |
-| #2 generate | Unit/mocked service: exercise insert error → throw, no `planId`; compensating `delete` invoked | Re-testing Postgres multi-row INSERT; OpenRouter; Playwright generate tour |
+| #2 generate | Unit/mocked service: exercise insert error → throw, no `planId`; compensating `delete` invoked | Re-testing Postgres multi-row INSERT; Gemini; Playwright generate tour |
 | #2 apply | Already have `applyProgressionSchema` tests. Add: `progressionApplyFailure` mapping. Optional mocked RPC: extra/missing id → throw, never success | Asserting SQL EXCEPT by executing Postgres; IDOR (Phase 3) |
 | #4 | Extract `planIdFromGenerateResponse` (mirror `sessionIdFromLogResponse`) so missing id is stay-with-error; extract shared `errorMessageFromBody`; unit under `environment: node` | jsdom island mount; pixel snapshots; Playwright; testing `ServerError` CSS |
 
