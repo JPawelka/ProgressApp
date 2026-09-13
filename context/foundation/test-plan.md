@@ -49,7 +49,7 @@ research's job, see §1 principle #3).
 | 6 | Shown or applied load violates the locked rule (unexplained jump, or increase/hold/deload disagrees with logged sets) | High | Medium | PRD Business Logic + bounds guardrail; interview Q3; hot-spot dir `src/lib/progression` (3 commits/30d) — rule unit exists; apply path is the gap |
 | 7 | Untrusted client body for log/generate/edit is stored as valid (invalid sets, ids that should not attach) | Medium | Medium | PRD FR-004; AGENTS validate APIs with zod; archive S-04 uniqueness/lineage; abuse lens (untrusted input) |
 
-OpenRouter / host outage is High × Low — observability, not this rollout.
+Gemini / host outage is High × Low — observability, not this rollout.
 
 ### Risk Response Guidance
 
@@ -134,7 +134,7 @@ There is still **no** live Supabase, RPC, or `APIContext` handler suite. Persist
 
 - **Location**: next to the schema or service (`src/lib/sessions/`, `src/lib/services/`, `src/lib/plans/`).
 - **Log completeness**: `logSessionSchema` (archive ranges, empty/incomplete/dup keys) + `buildLogSessionSets` (omit/renumber) + `sessionLogFailure` (user-facing 400/404/500 copy). Do not `SELECT session_sets`.
-- **Generate persist**: export `persistGeneratedPlan` and pass an in-process fake `from().insert()/.select().single()` / `delete().eq().eq()` client. Assert throw + compensating delete; do not call OpenRouter.
+- **Generate persist**: export `persistGeneratedPlan` and pass an in-process fake `from().insert()/.select().single()` / `delete().eq().eq()` client. Assert throw + compensating delete; do not call Gemini.
 - **Apply mapping**: `progressionApplyFailure` status + `{ error }` strings. Schema cases already live in `progression-apply-schema.test.ts`.
 - **Owner isolation**: fake `from().update/delete().eq("user_id")` empty `maybeSingle` → not-found (see `plan-edit.test.ts`). Fake `rpc` returning `{ message: "Not found" }` through `logSession` / `applyProgressionLoads`. Do **not** stub a successful row for a different `user_id`.
 - **Untrusted body beyond log/apply shape**: `generatePlanRequestSchema` and `patchPlanSchema` / `exerciseWriteSchema`. A well-formed foreign UUID still **parses**; attach is the fake `rpc`, not zod.
@@ -178,7 +178,7 @@ contributors should respect these unless the underlying assumption changes.
 - **Infrastructure deep-dives** — Worker/platform internals, hosted-only plumbing, and “prove the cloud” checks. Re-evaluate if a top-3 risk is proven to live only in that layer. (Source: Phase 2 interview Q5.)
 - **UI looks** — layout, spacing, snapshot/visual diffs, marketing/static chrome. Re-evaluate if a failure is “user cannot see an error” (that is Risk #4, behavior, not pixels). (Source: Phase 2 interview Q5.)
 - **shadcn primitives** — generated `src/components/ui/` controls. Re-evaluate if a primitive is forked. (Source: cost × signal + Q5.)
-- **Provider outage as a test** — OpenRouter/Supabase/Cloudflare down. Use observability, not the suite. (Source: High × Low challenger pass.)
+- **Provider outage as a test** — Gemini/Supabase/Cloudflare down. Use observability, not the suite. (Source: High × Low challenger pass.)
 
 ## 8. Freshness Ledger
 

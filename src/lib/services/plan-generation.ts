@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { TrainingGoal } from "@/types";
 import { isPlanGenerationAvailable, isPlanGenerationMockEnabled } from "@/lib/plans/plan-generation-config";
 import { buildMockPlanPayload } from "@/lib/plans/mock-plan-payload";
-import { requestPlanCompletion } from "@/lib/plans/openrouter";
+import { requestPlanCompletion } from "@/lib/plans/gemini";
 import { planAiSchema, type ValidatedPlanPayload } from "@/lib/plans/plan-generation-schema";
 
 export class PlanGenerationError extends Error {
@@ -20,7 +20,7 @@ export class PlanPersistError extends Error {
 }
 
 /**
- * Goal → OpenRouter → zod-validated plan payload.
+ * Goal → Gemini → zod-validated plan payload.
  * Does not persist to Supabase.
  */
 export async function generatePlanFromGoal(goal: TrainingGoal): Promise<ValidatedPlanPayload> {
@@ -121,7 +121,7 @@ export function planPersistFailure(error: unknown): { error: string; status: num
 }
 
 /**
- * Generate via OpenRouter, validate, then insert plan + exercises.
+ * Generate via Gemini, validate, then insert plan + exercises.
  * On exercise insert failure, deletes the plan row (no partial save).
  */
 export async function generateAndPersistPlan(

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { createClient } from "@/lib/supabase";
 import { isPlanGenerationAvailable } from "@/lib/plans/plan-generation-config";
-import { OpenRouterError } from "@/lib/plans/openrouter";
+import { GeminiError } from "@/lib/plans/gemini";
 import { formatGeneratePlanRequestError, generatePlanRequestSchema } from "@/lib/plans/plan-generation-schema";
 import { generateAndPersistPlan, PlanGenerationError, planPersistFailure } from "@/lib/services/plan-generation";
 
@@ -28,7 +28,7 @@ export const POST: APIRoute = async (context) => {
   }
 
   if (!isPlanGenerationAvailable()) {
-    return json({ error: "Plan generation is unavailable — OpenRouter is not configured" }, 503);
+    return json({ error: "Plan generation is unavailable — Gemini is not configured" }, 503);
   }
 
   let rawBody: unknown;
@@ -57,7 +57,7 @@ export const POST: APIRoute = async (context) => {
     const planId = await generateAndPersistPlan(supabase, user.id, parsed.data.goal);
     return json({ planId }, 200);
   } catch (error) {
-    if (error instanceof PlanGenerationError || error instanceof OpenRouterError) {
+    if (error instanceof PlanGenerationError || error instanceof GeminiError) {
       return json({ error: error.message }, 502);
     }
     const persist = planPersistFailure(error);

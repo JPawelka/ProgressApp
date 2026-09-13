@@ -95,7 +95,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Parallel with:** —
 - **Blockers:** —
 - **Unknowns:**
-  - Which LLM provider/API keys are used for plan generation in this MVP? — Owner: user. Block: no. → Resolved in plan: OpenRouter (`OPENROUTER_API_KEY`).
+  - Which LLM provider/API keys are used for plan generation in this MVP? — Owner: user. Block: no. → Resolved: Gemini (`GEMINI_API_KEY`, `gemini-2.5-flash`).
 - **Risk:** External AI dependency sits on the must-have path; under `speed`, keep generation to one goal→plan happy path and defer polish.
 - **Status:** done
 

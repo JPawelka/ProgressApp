@@ -240,13 +240,12 @@ Assumes Phase **0C** (Supabase CLI / project) is done. Production must use a **h
 - [x] Keep GitHub Actions repo secrets aligned with the same hosted values so `npm run build` in CI stays green
 - [x] `npx supabase link` — **skipped for now** (no app migrations yet; `auth.users` only). Revisit when product tables land.
 
-### OpenRouter (when AI plan generation lands) — **deferred**
+### Gemini (plan generation)
 
-Not in scope for current deploy path (see plan Out of scope / PRD AI later).
+Free-tier Google AI Studio key. Runtime only (not required for `astro build`).
 
-- [ ] Add runtime secret: `npx wrangler secret put OPENROUTER_API_KEY` (name TBD to match app code)
-- [ ] If the key is required at **build** time, also add it under Workers Builds → Build variables & secrets
-- [ ] Keep OpenRouter calls short; edge hop ≠ global DB/AI latency (see infrastructure risk register)
+- [ ] Add runtime secret: `npx wrangler secret put GEMINI_API_KEY`
+- [ ] Keep Gemini calls short; edge hop ≠ global DB/AI latency (see infrastructure risk register)
 - [ ] After enabling AI paths: smoke-test on workerd after any dependency bump (`nodejs_compat` is not full Node)
 
 ---

@@ -1,4 +1,4 @@
-import { OPENROUTER_API_KEY, PLAN_GENERATION_MOCK } from "astro:env/server";
+import { GEMINI_API_KEY, PLAN_GENERATION_MOCK } from "astro:env/server";
 
 /** Local dev only — set in `.dev.vars`, never in production Worker secrets. */
 export function isPlanGenerationMockEnabled(): boolean {
@@ -13,5 +13,5 @@ export function isPlanGenerationMockEnabled(): boolean {
 }
 
 export function isPlanGenerationAvailable(): boolean {
-  return isPlanGenerationMockEnabled() || Boolean(OPENROUTER_API_KEY);
+  return isPlanGenerationMockEnabled() || Boolean(GEMINI_API_KEY);
 }

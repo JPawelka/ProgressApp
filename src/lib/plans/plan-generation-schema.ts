@@ -24,13 +24,13 @@ export function formatGeneratePlanRequestError(error: z.ZodError) {
 }
 
 /**
- * JSON Schema for OpenRouter `response_format.json_schema` (strict).
- * Optional fields are represented as nullable so `required` can list every key.
+ * JSON Schema for Gemini `generationConfig.responseSchema`.
+ * Optional fields use `nullable` so every key can stay in `required`.
  */
-export const planAiJsonSchema = {
+export const geminiPlanResponseSchema = {
   type: "object",
   properties: {
-    name: { type: ["string", "null"], minLength: 1, maxLength: 100 },
+    name: { type: "string", nullable: true },
     exercises: {
       type: "array",
       minItems: 3,
@@ -38,15 +38,13 @@ export const planAiJsonSchema = {
       items: {
         type: "object",
         properties: {
-          name: { type: "string", minLength: 1, maxLength: 80 },
-          default_reps: { type: ["integer", "null"] },
-          default_load_kg: { type: ["number", "null"] },
+          name: { type: "string" },
+          default_reps: { type: "integer", nullable: true },
+          default_load_kg: { type: "number", nullable: true },
         },
         required: ["name", "default_reps", "default_load_kg"],
-        additionalProperties: false,
       },
     },
   },
   required: ["name", "exercises"],
-  additionalProperties: false,
 } as const;

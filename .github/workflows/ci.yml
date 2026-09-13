@@ -43,7 +43,7 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           # workerd (`npm run dev`) reads `.dev.vars`, not GitHub env.
-          # PLAN_GENERATION_MOCK keeps the empty-plans path off OpenRouter.
+          # PLAN_GENERATION_MOCK keeps the empty-plans path off Gemini.
           {
             printf 'SUPABASE_URL=%s\n' "$SUPABASE_URL"
             printf 'SUPABASE_KEY=%s\n' "$SUPABASE_KEY"

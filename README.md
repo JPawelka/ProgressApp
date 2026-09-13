@@ -175,6 +175,7 @@ Set runtime secrets:
 ```bash
 npx wrangler secret put SUPABASE_URL
 npx wrangler secret put SUPABASE_KEY
+npx wrangler secret put GEMINI_API_KEY
 ```
 
 ### Auto-deploy (Workers Builds)

@@ -1,4 +1,4 @@
-import { OPENROUTER_API_KEY, SUPABASE_URL, SUPABASE_KEY } from "astro:env/server";
+import { GEMINI_API_KEY, SUPABASE_URL, SUPABASE_KEY } from "astro:env/server";
 import { isPlanGenerationMockEnabled } from "@/lib/plans/plan-generation-config";
 
 export interface ConfigStatus {
@@ -20,11 +20,11 @@ export const configStatuses: ConfigStatus[] = [
     docsLabel: "Zobacz instrukcję konfiguracji",
   },
   {
-    name: "OpenRouter",
-    configured: Boolean(OPENROUTER_API_KEY) || mockEnabled,
+    name: "Gemini",
+    configured: Boolean(GEMINI_API_KEY) || mockEnabled,
     message: mockEnabled
-      ? "OpenRouter nie jest skonfigurowany — generowanie planów używa mock danych (tylko dev)."
-      : "OpenRouter nie jest skonfigurowany — generowanie planów jest wyłączone.",
+      ? "Gemini nie jest skonfigurowany — generowanie planów używa mock danych (tylko dev)."
+      : "Gemini nie jest skonfigurowany — generowanie planów jest wyłączone.",
   },
 ];
 
